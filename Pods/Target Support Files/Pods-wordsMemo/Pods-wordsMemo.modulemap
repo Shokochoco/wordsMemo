@@ -1,0 +1,6 @@
+framework module Pods_wordsMemo {
+  umbrella header "Pods-wordsMemo-umbrella.h"
+
+  export *
+  module * { export * }
+}
