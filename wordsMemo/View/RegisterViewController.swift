@@ -12,9 +12,9 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
     
     var words: Words? //セルをタップした時の編集情報の受け皿、最初はオプショナル
     var genderCategory = "Homme"
+    var checkedCheck = false
     
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,7 +35,7 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
         registerButton.setTitleColor(.white, for: UIControl.State.normal)
         registerButton.layer.cornerRadius = 10
         
-        // wordsに値が代入されていたら(編集されていたら)、textFieldとsegmentedControlにそれを表示
+        // wordsに値が代入されていたら(編集されていたら)、textFieldとsegmentedControlなどにそれを表示
         if let words = words {
             
             jpText.text = words.nameJp!
@@ -58,6 +58,11 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
             default:
                 print("反応しない")
             }
+            
+            
+            checkedCheck = words.checked ? words.checked : words.checked
+            
+            
         }
         
         //他のところタッチしてキーボード閉じる
@@ -120,10 +125,11 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func registerButton(_ sender: UIButton) {
         
-        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let wordJpName = jpText.text
         let wordFrName = frText.text
         let memoText = textView.text
+        
         
         if wordJpName == ""  { //|| wordFrName == ""
             dismiss(animated: true, completion: nil)
@@ -142,6 +148,7 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
             words.nameFr = wordFrName
             words.gender = genderCategory
             words.memo = memoText
+            words.checked = checkedCheck
         }
         
         //保存

@@ -6,10 +6,12 @@ import CoreData
 
 class NewViewController: UIViewController {
     
+    
     var searchController: UISearchController!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var switchBtn: UIBarButtonItem!
     
-
+    
     
     var done = UIImage(systemName: "checkmark.circle")!.withRenderingMode(.alwaysTemplate)
     var donefill = UIImage(systemName: "checkmark.circle.fill")!.withRenderingMode(.alwaysTemplate)
@@ -20,7 +22,7 @@ class NewViewController: UIViewController {
     
     var words:[Words] = []
     var searchResults: [Words] = []
-    var filterWords:[Words] = []
+    var filteredNotCheked = [Words?]()
     
     
     var isSearchBarEmpty: Bool {
@@ -30,16 +32,22 @@ class NewViewController: UIViewController {
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
     }
-  
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    
     
     private let segueEditTaskViewController = "SegueEditTaskViewController" //編集用segueのidentifir
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        audioSwitch()
         setup()
+        getData()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getData()
     }
     
     private func setup() {
@@ -57,7 +65,7 @@ class NewViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes
             = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 25)!]
         
-
+        
         
         if #available(iOS 11.0, *) {
             // UISearchControllerをUINavigationItemのsearchControllerプロパティにセットする。
@@ -73,10 +81,6 @@ class NewViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        getData()
-        
-    }
     
     //フィルターかける、それをsearchResultsに詰める
     func filterContentForSearchText(_ searchText: String) {
@@ -87,26 +91,25 @@ class NewViewController: UIViewController {
         tableView.reloadData()
     }
     
-// wondering whether put on this toggle...
+    func audioSwitch(){
+        
+        let switchControl = UISwitch(frame: CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: 50, height: 30)))
+        switchControl.isOn = true
+        switchControl.onTintColor = UIColor.white
+        switchControl.setOn(true, animated: false)
+        switchControl.addTarget(self, action: #selector(self.switchValueDidChange(sender:)), for: .valueChanged)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: switchControl)
+    }
     
-//    func audioSwitch(){
-//        let switchControl = UISwitch(frame: CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: 50, height: 30)))
-//        switchControl.isOn = true
-//        switchControl.onTintColor = UIColor.white
-//        switchControl.setOn(true, animated: false)
-//        switchControl.addTarget(self, action: #selector(self.switchValueDidChange(sender:)), for: .valueChanged)
-//        let toggleButton = UIBarButtonItem.init(customView: switchControl)
-//    }
-//
-//    @objc func switchValueDidChange(sender: UISwitch!)
-//    {
-//        if sender.isOn {
-//            print("on")
-//        } else{
-//            print("off")
-//        }
-//    }
-   
+    @objc func switchValueDidChange(sender: UISwitch!)
+    {
+        
+        if sender.isOn {
+            getData()
+        } else{
+            getDataNotyet()
+        }
+    }
     
     // MARK: - Segue Navigation
     
@@ -114,11 +117,13 @@ class NewViewController: UIViewController {
         guard let destinationViewController = segue.destination as? RegisterViewController else { return }
         
         
-        // contextをAddTaskViewController.swiftのcontextへ渡す
+        
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        destinationViewController.context = context
-        //セルをタップした時（searchBarを入れたver)
+        // contextをRegisterViewController.swiftのcontextへ渡すけどインスタンス変数じゃなくなったから代入しなくていい
+        //        destinationViewController.context = context
+        
+        //セルをタップした時
         if let indexPath = tableView.indexPathForSelectedRow, segue.identifier == segueEditTaskViewController {
             // 編集したいデータを取得
             let word: Words
@@ -128,16 +133,14 @@ class NewViewController: UIViewController {
                 word = words[indexPath.row]
             }
             
-            
-            
             let editedWordJp = word.nameJp!
             let editedWordFr = word.nameFr!
             let editedGender = word.gender!
             
             // 先ほど取得したnameとgenderに合致するデータのみをfetchするようにfetchRequestを作成
             let fetchRequest: NSFetchRequest<Words> = Words.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "nameJp = %@ and nameFr = %@ and gender = %@", editedWordJp, editedWordFr, editedGender)
-            // そのfetchRequestを満たすデータをfetchしてtask(配列だが要素を1種類しか持たないはず）に代入し、それを渡す
+            fetchRequest.predicate = NSPredicate(format: "nameJp = %@ and nameFr = %@ and gender = %@ ", editedWordJp, editedWordFr, editedGender)
+            // そのfetchRequestを満たすデータをfetchしてwords(配列だが要素を1種類しか持たないはず）に代入し、それを渡す
             do {
                 let words = try context.fetch(fetchRequest)
                 destinationViewController.words = words[0]
@@ -155,7 +158,7 @@ class NewViewController: UIViewController {
 
 extension NewViewController: UITableViewDataSource, UITableViewDelegate {
     
-    //    サーチバー入れた後
+    
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
@@ -165,13 +168,17 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         return words.count
     }
     
+    
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordTableViewCell", for: indexPath)as! WordTableViewCell
         
+        filteredNotCheked = words.filter { $0.checked == false }//未完了のセル（統計計算用）
+        
         //checkボタンタップ用デリゲート
         cell.indexPath = indexPath
         cell.delegate = self
+        
         //検索した時
         var word: Words
         if isFiltering {
@@ -179,16 +186,6 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             word = words[indexPath.row]
         }
-
-     
-//           if  sender.isOn {
-//            word = words[indexPath.row]
-//           } else {
-//            filterWords = words.filter{$0.checked == false}
-//            word = filterWords[indexPath.row]
-//           }
-        
-        
         
         cell.wordJp.text = word.nameJp!
         cell.wordFr.text = word.nameFr!
@@ -212,44 +209,49 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
-     
+    
+    
     // MARK: - Save and Get data
     
- func getData() {
-
-
+    func getDataNotyet() {
+        
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Words")
         fetchRequest.predicate = NSPredicate(format: "checked == false")
-
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
         words.removeAll()
-
+        
         do {
             let wordData =  try context.fetch(fetchRequest) as! [Words]
-
+            
             words.append(contentsOf: wordData)
-
+            
         } catch {
             print("error getData")
         }
-
+        
         tableView.reloadData()
     }
     
-//    func getData(with request: NSFetchRequest<Words> = Words.fetchRequest(), predicate: NSPredicate? = nil) {
-//
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-//
-//        do {
-//            words = try context.fetch(Words.fetchRequest())
-//        } catch  {
-//            print("load fail")
-//        }
-//        tableView.reloadData()
-//    }
+    func getData(with request: NSFetchRequest<Words> = Words.fetchRequest(), predicate: NSPredicate? = nil) {
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        do {
+            words = try context.fetch(Words.fetchRequest())
+        } catch  {
+            print("load fail")
+        }
+        tableView.reloadData()
+    }
     
     //save
     
     func saveItems() {
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         do {
             try context.save()
@@ -268,11 +270,12 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
     // Quand je swipe le rang
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         // 削除処理
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
             
             //削除処理を記述
-            self.context.delete(self.words[indexPath.row])
+            context.delete(self.words[indexPath.row])
             self.words.remove(at: indexPath.row)
             self.saveItems()
             
@@ -295,15 +298,42 @@ extension NewViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
+        
     }
+    
 }
 
 extension NewViewController: WordTableViewCellDelegate {
     
     func checkButtonTapped(indexPath: IndexPath) {
         
+        let date = Date()
         //プロパティ自体にcheckedをセットしてセルの繰り返しを防ぐ
-        words[indexPath.row].checked = !words[indexPath.row].checked
+        if isFiltering {
+            searchResults[indexPath.row].checked = !searchResults[indexPath.row].checked
+            searchResults[indexPath.row].checkedDate = searchResults[indexPath.row].checked ? date: nil
+        } else {
+            words[indexPath.row].checked = !words[indexPath.row].checked
+            words[indexPath.row].checkedDate = words[indexPath.row].checked ? date: nil
+        }
+        
+        //        if isFiltering {
+        //            searchResults[indexPath.row].checked = !searchResults[indexPath.row].checked
+        //            if searchResults[indexPath.row].checked {
+        //                searchResults[indexPath.row].checkedDate = date
+        //            } else {
+        //                searchResults[indexPath.row].checkedDate = nil
+        //            }
+        //
+        //        } else {
+        //            words[indexPath.row].checked = !words[indexPath.row].checked
+        //            if words[indexPath.row].checked {
+        //                        words[indexPath.row].checkedDate = date
+        //                    } else {
+        //                        words[indexPath.row].checkedDate = nil
+        //                    }
+        //        }
+        
         
         // pour moi pour etudier
         //            if words[indexPath.row].checked {
@@ -315,3 +345,4 @@ extension NewViewController: WordTableViewCellDelegate {
         saveItems()
     }
 }
+
