@@ -100,7 +100,7 @@
 			children = (
 				D810154926C8130F00B56DA7 /* TabbarController.swift */,
 				D8A8D6C726A1D4B40005457E /* NewViewController.swift */,
-				D8A8D6E726A4115F0005457E /* WordTableViewCell.swift */,
+				D8F98BFD26A5918E00907544 /* RegisterViewController.swift */,
 				D8A8D6DC26A1DB790005457E /* FavViewController.swift */,
 				D8A8D6DF26A1DB920005457E /* StatisticsViewController.swift */,
 			);
@@ -110,8 +110,8 @@
 		D8A8D6E526A2CE570005457E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D8A8D6E726A4115F0005457E /* WordTableViewCell.swift */,
 				D8A8D6C926A1D4B40005457E /* Main.storyboard */,
-				D8F98BFD26A5918E00907544 /* RegisterViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -414,7 +414,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gmail-mode.sh0k0.c.wordsMemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -435,7 +435,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gmail-mode.sh0k0.c.wordsMemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

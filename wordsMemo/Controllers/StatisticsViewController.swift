@@ -15,12 +15,20 @@ class StatisticsViewController: UIViewController {
     
     var dayChecekdMarkCounts = [Double]()
     
+    override var shouldAutorotate: Bool {
+            //縦画面なので縦に固定
+            UIDevice.current.setValue(1, forKey: "orientation")
+            return false
+
+       }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupChart()
         setData()
-        
+        //回転を検知する
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationChange), name: UIDevice.orientationDidChangeNotification, object: nil)
         
     }
     
@@ -42,9 +50,14 @@ class StatisticsViewController: UIViewController {
         
         let totalCount = Int(favvc.favorites.count)+Int(newvc.filteredNotCheked.count)
         
-        titleLabel1.text = "Fini： \(String(favvc.favorites.count)) mots 🔥"
-        titleLabel2.text = "Total： \(String(totalCount))mots 🇫🇷"
+        titleLabel1.text = "Fini 🥖： \(String(favvc.favorites.count))"
+        titleLabel2.text = "Total 🍷： \(String(totalCount))"
         
+    }
+    
+    //回転をするたびにcircleを再度表示
+    @objc func orientationChange() {
+        circle()
     }
     
     func circle() {
@@ -141,7 +154,7 @@ class StatisticsViewController: UIViewController {
     
     func setupChart() {
         
-        //X軸設定　right to left
+        //X軸設定
         let dateFormatter = DateFormatter() //DateFormatterクラスをインスタンス化
         dateFormatter.dateFormat = "M/d" //日付のフォーマット指定
         let cal = Calendar.current
@@ -170,12 +183,10 @@ class StatisticsViewController: UIViewController {
         
         //y軸設定
         chart.rightAxis.enabled = false
- //       chart.leftAxis.enabled = false
-        chart.leftAxis.drawAxisLineEnabled = false //y左軸の表示
-        chart.leftAxis.axisMinimum = 0.0  // Y座標の値が0始まりになるように設定
-        chart.leftAxis.drawZeroLineEnabled = true
-        // Y座標の値が0始まりになるように設定
-        chart.leftAxis.axisMinimum = 0.0
+        chart.leftAxis.enabled = true
+    
+        chart.leftAxis.axisMinimum = 0.0 // Y座標の値が0始まりになるように設定
+        chart.leftAxis.axisMaximum = 15.0
         chart.leftAxis.drawZeroLineEnabled = true
         chart.leftAxis.zeroLineColor = .systemGray
         // ラベルの数を設定
@@ -184,7 +195,7 @@ class StatisticsViewController: UIViewController {
         chart.leftAxis.labelTextColor = .systemGray
         // グリッドの色を設定
         chart.leftAxis.gridColor = .systemGray
-        // 軸線は非表示にする
+        // y左軸線の表示
         chart.leftAxis.drawAxisLineEnabled = false
         
         //その他

@@ -13,6 +13,7 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
     var words: Words? //セルをタップした時の編集情報の受け皿、最初はオプショナル
     var genderCategory = "Homme"
     var checkedCheck = false
+
     
 
     override func viewDidLoad() {
@@ -35,7 +36,7 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
         registerButton.setTitleColor(.white, for: UIControl.State.normal)
         registerButton.layer.cornerRadius = 10
         
-        // wordsに値が代入されていたら(編集されていたら)、textFieldとsegmentedControlなどにそれを表示
+        // wordsに値が代入されてる状態（既存のものをクリックした時）、textFieldとsegmentedControlなどに元々入ってる値を代入
         if let words = words {
             
             jpText.text = words.nameJp!
@@ -47,19 +48,8 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
                 textView.text = ""
             }
             
-            
-            switch genderSwitch.selectedSegmentIndex {
-            case 0:
-                genderCategory = "Homme"
-            case 1:
-                genderCategory = "Femme"
-            case 2:
-                genderCategory = "Non"
-            default:
-                print("反応しない")
-            }
-            
-            
+            genderCategory = words.gender!
+           
             checkedCheck = words.checked ? words.checked : words.checked
             
             
@@ -72,6 +62,8 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
         
     }
     
+    
+    
     //他のところタッチしてキーボード閉じる
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
@@ -82,14 +74,14 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
         if !textView.isFirstResponder {
             return
         }
-        
+
         if self.view.frame.origin.y == 0 { //y座標が0の時
             if let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                 self.view.frame.origin.y -= keyboardRect.height // 始点y座標からキーボードのy座標を引いた地点を新しく始まるviewのy座標始点として代入
             }
         }
     }
-    
+
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
@@ -122,13 +114,14 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
     // MARK: - Register Button
     
     
-    
+    //新規登録時・編集時
     @IBAction func registerButton(_ sender: UIButton) {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let wordJpName = jpText.text
         let wordFrName = frText.text
         let memoText = textView.text
+        
         
         
         if wordJpName == ""  { //|| wordFrName == ""

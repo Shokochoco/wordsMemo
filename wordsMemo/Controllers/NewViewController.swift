@@ -58,7 +58,7 @@ class NewViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         //searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Ecrivez Français"
+        searchController.searchBar.placeholder = "écrivez français"
         
         
         navigationItem.title = "Français"
@@ -95,7 +95,7 @@ class NewViewController: UIViewController {
         
         let switchControl = UISwitch(frame: CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: 50, height: 30)))
         switchControl.isOn = true
-        switchControl.onTintColor = UIColor.white
+        switchControl.onTintColor = #colorLiteral(red: 0, green: 0.6117647059, blue: 0.5764705882, alpha: 0.8470000029)
         switchControl.setOn(true, animated: false)
         switchControl.addTarget(self, action: #selector(self.switchValueDidChange(sender:)), for: .valueChanged)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: switchControl)
@@ -111,7 +111,7 @@ class NewViewController: UIViewController {
         }
     }
     
-    // MARK: - Segue Navigation
+    // MARK: - Segue Navigation　- when back to NewView from RegisterView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationViewController = segue.destination as? RegisterViewController else { return }

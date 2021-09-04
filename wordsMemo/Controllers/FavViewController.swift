@@ -44,7 +44,7 @@ class FavViewController: UIViewController, UISearchResultsUpdating {
         //結果表示用のビューコントローラーに自分を設定する。
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Ecrivez Français"
+        searchController.searchBar.placeholder = "écrivez français"
         
         if #available(iOS 11.0, *) {
             // UISearchControllerをUINavigationItemのsearchControllerプロパティにセットする。
