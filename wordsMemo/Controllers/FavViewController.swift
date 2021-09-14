@@ -103,7 +103,7 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         
-        cell.wordJp.text = favorite.nameJp!
+        cell.wordEn.text = favorite.nameEn!
         cell.wordFr.text = favorite.nameFr!
         cell.genderText.text = favorite.gender
         
@@ -150,8 +150,6 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     // MARK: - Save and Get data
-    
-    //CoreDataからデータを取得するためのコード
     
     func getData() {
         

@@ -15,12 +15,7 @@ class StatisticsViewController: UIViewController {
     
     var dayChecekdMarkCounts = [Double]()
     
-    override var shouldAutorotate: Bool {
-            //縦画面なので縦に固定
-            UIDevice.current.setValue(1, forKey: "orientation")
-            return false
 
-       }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,12 +45,12 @@ class StatisticsViewController: UIViewController {
         
         let totalCount = Int(favvc.favorites.count)+Int(newvc.filteredNotCheked.count)
         
-        titleLabel1.text = "Fini 🥖： \(String(favvc.favorites.count))"
-        titleLabel2.text = "Total 🍷： \(String(totalCount))"
+        titleLabel1.text = "Les mots finis ✅： \(String(favvc.favorites.count))"
+        titleLabel2.text = "Les mots totalaux： \(String(totalCount))"
         
     }
     
-    //回転をするたびにcircleを再度表示
+    //回転をするたびにcircleグラフを再度表示
     @objc func orientationChange() {
         circle()
     }
@@ -134,7 +129,7 @@ class StatisticsViewController: UIViewController {
         
         readData(date: Date())
      
-        let entries:[BarChartDataEntry] = [  //yに入れていく
+        let entries:[BarChartDataEntry] = [
             BarChartDataEntry(x: 1, y: dayChecekdMarkCounts[0]),
             BarChartDataEntry(x: 2, y: dayChecekdMarkCounts[1]),
             BarChartDataEntry(x: 3, y: dayChecekdMarkCounts[2]),
@@ -201,7 +196,7 @@ class StatisticsViewController: UIViewController {
         //その他
         chart.legend.enabled = false //"■ months"のlegendの表示
         chart.animate(yAxisDuration: 1.5)
-        chart.gridBackgroundColor = .white
+        chart.gridBackgroundColor = .systemBackground
         
         chart.pinchZoomEnabled = false
         chart.drawBarShadowEnabled = false
@@ -220,26 +215,6 @@ class StatisticsViewController: UIViewController {
     }
     
 }
-
-//今日の日付をパラメーターstartDateに入れて、受け取る日付から要素分を表示させる
-
-//class DateValueFormatter: NSObject, IAxisValueFormatter {
-//
-//    let dateFormatter = DateFormatter()
-//    var startDate:Date
-//
-//    init(startDate:Date) {
-//        self.startDate = startDate
-//    }
-//
-//    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-//        let modifiedDate = Calendar.current.date(byAdding: .day, value: Int(value), to: startDate )!
-//        dateFormatter.dateFormat = "M/d"
-//        return dateFormatter.string(from: modifiedDate)
-//    }
-//
-//
-//}
 
 //x軸のラベル設定
 class DateValueFormatter: NSObject, IAxisValueFormatter {

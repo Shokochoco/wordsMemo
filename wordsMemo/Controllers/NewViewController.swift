@@ -16,8 +16,8 @@ class NewViewController: UIViewController {
     var done = UIImage(systemName: "checkmark.circle")!.withRenderingMode(.alwaysTemplate)
     var donefill = UIImage(systemName: "checkmark.circle.fill")!.withRenderingMode(.alwaysTemplate)
     
-    @IBAction func backView(segue: UIStoryboardSegue) {
-    }
+//    @IBAction func backView(segue: UIStoryboardSegue) {
+//    }
     
     
     var words:[Words] = []
@@ -111,8 +111,8 @@ class NewViewController: UIViewController {
         }
     }
     
-    // MARK: - Segue Navigation　- when back to NewView from RegisterView
-    
+    // MARK:  - Segue Navigation
+    // RegisterViewにセルの情報を渡す
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationViewController = segue.destination as? RegisterViewController else { return }
         
@@ -125,21 +125,21 @@ class NewViewController: UIViewController {
         
         //セルをタップした時
         if let indexPath = tableView.indexPathForSelectedRow, segue.identifier == segueEditTaskViewController {
-            // 編集したいデータを取得
+            //検索してる時
             let word: Words
             if isFiltering {
                 word = searchResults[indexPath.row]
             } else {
                 word = words[indexPath.row]
             }
-            
-            let editedWordJp = word.nameJp!
+            // 編集したいデータを取得
+            let editedWordEn = word.nameEn!
             let editedWordFr = word.nameFr!
             let editedGender = word.gender!
             
             // 先ほど取得したnameとgenderに合致するデータのみをfetchするようにfetchRequestを作成
             let fetchRequest: NSFetchRequest<Words> = Words.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "nameJp = %@ and nameFr = %@ and gender = %@ ", editedWordJp, editedWordFr, editedGender)
+            fetchRequest.predicate = NSPredicate(format: "nameEn = %@ and nameFr = %@ and gender = %@ ", editedWordEn, editedWordFr, editedGender)
             // そのfetchRequestを満たすデータをfetchしてwords(配列だが要素を1種類しか持たないはず）に代入し、それを渡す
             do {
                 let words = try context.fetch(fetchRequest)
@@ -187,7 +187,7 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
             word = words[indexPath.row]
         }
         
-        cell.wordJp.text = word.nameJp!
+        cell.wordEn.text = word.nameEn!
         cell.wordFr.text = word.nameFr!
         cell.genderText.text = word.gender
         
@@ -265,9 +265,7 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     // MARK: - SwipeAction
-    
-    
-    // Quand je swipe le rang
+
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -316,24 +314,6 @@ extension NewViewController: WordTableViewCellDelegate {
             words[indexPath.row].checked = !words[indexPath.row].checked
             words[indexPath.row].checkedDate = words[indexPath.row].checked ? date: nil
         }
-        
-        //        if isFiltering {
-        //            searchResults[indexPath.row].checked = !searchResults[indexPath.row].checked
-        //            if searchResults[indexPath.row].checked {
-        //                searchResults[indexPath.row].checkedDate = date
-        //            } else {
-        //                searchResults[indexPath.row].checkedDate = nil
-        //            }
-        //
-        //        } else {
-        //            words[indexPath.row].checked = !words[indexPath.row].checked
-        //            if words[indexPath.row].checked {
-        //                        words[indexPath.row].checkedDate = date
-        //                    } else {
-        //                        words[indexPath.row].checkedDate = nil
-        //                    }
-        //        }
-        
         
         // pour moi pour etudier
         //            if words[indexPath.row].checked {

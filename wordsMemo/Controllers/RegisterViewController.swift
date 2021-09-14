@@ -4,18 +4,19 @@ import CoreData
 
 class RegisterViewController: UIViewController, UITextViewDelegate {
     
-    @IBOutlet weak var jpText: UITextField!
+    @IBOutlet weak var enText: UITextField!
     @IBOutlet weak var frText: UITextField!
     @IBOutlet weak var genderSwitch: UISegmentedControl!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var registerButton: UIButton!
     
+    
     var words: Words? //セルをタップした時の編集情報の受け皿、最初はオプショナル
     var genderCategory = "Homme"
     var checkedCheck = false
-
     
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,11 +24,20 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         // Textfield枠のカラー
+        enText.layer.borderColor = UIColor.lightGray.cgColor
+        frText.layer.borderColor = UIColor.lightGray.cgColor
         textView.layer.borderColor = UIColor.lightGray.cgColor
         // 枠の幅
+        enText.layer.borderWidth = 1.0
+        frText.layer.borderWidth = 1.0
         textView.layer.borderWidth = 1.0
         // 枠を角丸にする
+        enText.layer.cornerRadius = 10.0
+        frText.layer.cornerRadius = 10.0
         textView.layer.cornerRadius = 10.0
+        
+        enText.layer.masksToBounds = true
+        frText.layer.masksToBounds = true
         textView.layer.masksToBounds = true
         
         //RegisterBtnデザイン
@@ -39,7 +49,7 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
         // wordsに値が代入されてる状態（既存のものをクリックした時）、textFieldとsegmentedControlなどに元々入ってる値を代入
         if let words = words {
             
-            jpText.text = words.nameJp!
+            enText.text = words.nameEn!
             frText.text = words.nameFr!
             
             if let wordMemo = words.memo {
@@ -49,7 +59,7 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
             }
             
             genderCategory = words.gender!
-           
+            
             checkedCheck = words.checked ? words.checked : words.checked
             
             
@@ -74,14 +84,14 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
         if !textView.isFirstResponder {
             return
         }
-
+        
         if self.view.frame.origin.y == 0 { //y座標が0の時
             if let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                 self.view.frame.origin.y -= keyboardRect.height // 始点y座標からキーボードのy座標を引いた地点を新しく始まるviewのy座標始点として代入
             }
         }
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
@@ -118,36 +128,49 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
     @IBAction func registerButton(_ sender: UIButton) {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        let wordJpName = jpText.text
+        let wordEnName = enText.text
         let wordFrName = frText.text
         let memoText = textView.text
         
         
-        
-        if wordJpName == ""  { //|| wordFrName == ""
-            dismiss(animated: true, completion: nil)
-            return
+        if wordEnName == "" || wordFrName == "" {
+            
+            let alert = UIAlertController(title: "Entrez les mots 🇬🇧&🇫🇷", message: "", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default) { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(ok)
+            present(alert, animated: true, completion: .none)
+                        
+        } else {
+            
+            // 渡ってきたwordsが空なら（＝ ＋ボタンを押した時）、新しいWords型オブジェクトを作成する
+            if words == nil {
+                //contextの中にnewItemを作って用意
+                words = Words(context: context)
+                
+            }
+            
+            // 受け取ったオブジェクト（編集時）、または、先ほど新しく作成したオブジェクト（新規時）どちらもwordsにしてあるので、CoreDataに代入する
+            if let words = words {
+                words.nameEn = wordEnName
+                words.nameFr = wordFrName
+                words.gender = genderCategory
+                words.memo = memoText
+                words.checked = checkedCheck
+            }
+            
+            //保存
+            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            navigationController!.popViewController(animated: true)
         }
         
-        // 受け取った値が空であれば、新しいWords型オブジェクトを作成する
-        if words == nil {
-            //contextの中にnewItemを作って用意
-            words = Words(context: context)
-        }
         
-        // 受け取ったオブジェクト、または、先ほど新しく作成したオブジェクトそのタスクのnameとcategoryに入力データを代入する
-        if let words = words {
-            words.nameJp = wordJpName
-            words.nameFr = wordFrName
-            words.gender = genderCategory
-            words.memo = memoText
-            words.checked = checkedCheck
-        }
-        
-        //保存
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
-        navigationController!.popViewController(animated: true)
     }
+    
+    
+    
+    
 }
 
 

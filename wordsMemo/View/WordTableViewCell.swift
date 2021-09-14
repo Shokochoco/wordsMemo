@@ -11,7 +11,7 @@ protocol WordTableViewCellDelegate: class {
 
 class WordTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var wordJp: UILabel!
+    @IBOutlet weak var wordEn: UILabel!
     @IBOutlet weak var wordFr: UILabel!
     @IBOutlet weak var genderText: UILabel!
     @IBOutlet weak var checkButton: UIButton!
