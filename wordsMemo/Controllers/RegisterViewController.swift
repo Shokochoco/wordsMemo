@@ -141,7 +141,7 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
             }
             alert.addAction(ok)
             present(alert, animated: true, completion: .none)
-                        
+            
         } else {
             
             // 渡ってきたwordsが空なら（＝ ＋ボタンを押した時）、新しいWords型オブジェクトを作成する

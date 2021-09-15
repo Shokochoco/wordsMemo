@@ -312,13 +312,6 @@ extension NewViewController: WordTableViewCellDelegate {
             words[indexPath.row].checkedDate = words[indexPath.row].checked ? date: nil
         }
         
-        // pour moi pour etudier
-        //            if words[indexPath.row].checked {
-        //                vc.favorites.append(words[indexPath.row])
-        //            } else {
-        //                vc.favorites.removeAll { $0 == words[indexPath.row] } //$0にはvc.favoritesの中身がひとつずつ代入
-        //            }
-        
         saveItems()
     }
 }
