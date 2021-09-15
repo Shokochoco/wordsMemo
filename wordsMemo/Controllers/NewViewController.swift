@@ -16,14 +16,11 @@ class NewViewController: UIViewController {
     var done = UIImage(systemName: "checkmark.circle")!.withRenderingMode(.alwaysTemplate)
     var donefill = UIImage(systemName: "checkmark.circle.fill")!.withRenderingMode(.alwaysTemplate)
     
-//    @IBAction func backView(segue: UIStoryboardSegue) {
-//    }
-    
     
     var words:[Words] = []
     var searchResults: [Words] = []
     var filteredNotCheked = [Words?]()
-    
+    var filteredChecked = [Words?]()
     
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
@@ -34,8 +31,8 @@ class NewViewController: UIViewController {
     }
     
     
-    
-    private let segueEditTaskViewController = "SegueEditTaskViewController" //編集用segueのidentifir
+    //編集用segueのidentifir
+    private let segueEditTaskViewController = "SegueEditTaskViewController"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,12 +40,12 @@ class NewViewController: UIViewController {
         audioSwitch()
         setup()
         getData()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getData()
     }
+    
     
     private func setup() {
         
@@ -150,8 +147,6 @@ class NewViewController: UIViewController {
         }
     }
     
-    
-    
 }
 
 // MARK: - TableView Datasorse Methods
@@ -172,8 +167,10 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordTableViewCell", for: indexPath)as! WordTableViewCell
-        
-        filteredNotCheked = words.filter { $0.checked == false }//未完了のセル（統計計算用）
+       
+        //統計計算用
+        filteredNotCheked = words.filter { $0.checked == false }
+        filteredChecked = words.filter { $0.checked == true }
         
         //checkボタンタップ用デリゲート
         cell.indexPath = indexPath

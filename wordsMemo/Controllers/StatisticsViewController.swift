@@ -15,7 +15,7 @@ class StatisticsViewController: UIViewController {
     
     var dayChecekdMarkCounts = [Double]()
     
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +40,10 @@ class StatisticsViewController: UIViewController {
         //Navigation Controllerのトップ画面をView Controllerに指定する
         let newvc = newController.topViewController as! NewViewController
         
-        let favController = self.tabBarController?.viewControllers?[1] as! UINavigationController
-        let favvc = favController.topViewController as! FavViewController
+        let checkedCount = newvc.filteredChecked.count
+        let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
         
-        let totalCount = Int(favvc.favorites.count)+Int(newvc.filteredNotCheked.count)
-        
-        titleLabel1.text = "Les mots finis ✅： \(String(favvc.favorites.count))"
+        titleLabel1.text = "Les mots finis ✅： \(String(checkedCount))"
         titleLabel2.text = "Les mots totalaux： \(String(totalCount))"
         
     }
@@ -62,13 +60,10 @@ class StatisticsViewController: UIViewController {
         //Navigation Controllerのトップ画面をView Controllerに指定する
         let newvc = newController.topViewController as! NewViewController
         
-        //fav
-        let favController = self.tabBarController?.viewControllers?[1] as! UINavigationController
-        let favvc = favController.topViewController as! FavViewController
+        let checkedCount = newvc.filteredChecked.count
+        let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
         
-        let totalCount = Int(favvc.favorites.count)+Int(newvc.filteredNotCheked.count)
-        
-        progressCircle.value = (CGFloat(favvc.favorites.count) / CGFloat(totalCount)) * 100
+        progressCircle.value = (CGFloat(checkedCount) / CGFloat(totalCount)) * 100
         
     }
     
@@ -128,7 +123,7 @@ class StatisticsViewController: UIViewController {
         }
         
         readData(date: Date())
-     
+        
         let entries:[BarChartDataEntry] = [
             BarChartDataEntry(x: 1, y: dayChecekdMarkCounts[0]),
             BarChartDataEntry(x: 2, y: dayChecekdMarkCounts[1]),
@@ -179,7 +174,7 @@ class StatisticsViewController: UIViewController {
         //y軸設定
         chart.rightAxis.enabled = false
         chart.leftAxis.enabled = true
-    
+        
         chart.leftAxis.axisMinimum = 0.0 // Y座標の値が0始まりになるように設定
         chart.leftAxis.axisMaximum = 15.0
         chart.leftAxis.drawZeroLineEnabled = true
