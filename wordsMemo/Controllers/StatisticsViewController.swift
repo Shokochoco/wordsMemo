@@ -43,8 +43,8 @@ class StatisticsViewController: UIViewController {
         let checkedCount = newvc.filteredChecked.count
         let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
         
-        titleLabel1.text = "Les mots finis ✅： \(String(checkedCount))"
-        titleLabel2.text = "Les mots totalaux： \(String(totalCount))"
+        titleLabel1.text = "Fini 🥖： \(String(checkedCount))"
+        titleLabel2.text = "Le total： \(String(totalCount))"
         
     }
     
