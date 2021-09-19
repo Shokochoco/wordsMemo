@@ -117,9 +117,6 @@ class NewViewController: UIViewController {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        // contextをRegisterViewController.swiftのcontextへ渡すけどインスタンス変数じゃなくなったから代入しなくていい
-        //        destinationViewController.context = context
-        
         //セルをタップした時
         if let indexPath = tableView.indexPathForSelectedRow, segue.identifier == segueEditTaskViewController {
             //検索してる時

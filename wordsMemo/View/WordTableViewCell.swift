@@ -23,19 +23,6 @@ class WordTableViewCell: UITableViewCell {
     @IBAction func  checkButton(_ sender:  UIButton) {
         //画像変更・お気に入り更新
         delegate?.checkButtonTapped(indexPath: indexPath)
-    
-//   要らない
-//        sender.isSelected = !sender.isSelected
-//
-//        if sender.isSelected {
-//            favoriteButton.setImage(starfill, for: UIControl.State())
-//            favoriteButton.tintColor = .red
-//            print("on")
-//        } else {
-//            favoriteButton.setImage(star, for: UIControl.State())
-//            favoriteButton.tintColor = .lightGray
-//            print("off")
-//        }
 
     }
 
