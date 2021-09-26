@@ -1,13 +1,8 @@
-
-
 import UIKit
-import CoreData
 
-protocol WordTableViewCellDelegate: class {
+protocol WordTableViewCellDelegate: AnyObject {
     func checkButtonTapped(indexPath: IndexPath)
 }
-
-
 
 class WordTableViewCell: UITableViewCell {
     
@@ -23,20 +18,6 @@ class WordTableViewCell: UITableViewCell {
     @IBAction func  checkButton(_ sender:  UIButton) {
         //画像変更・お気に入り更新
         delegate?.checkButtonTapped(indexPath: indexPath)
-
-    }
-
- 
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-       
-        // Configure the view for the selected state
     }
   
 }

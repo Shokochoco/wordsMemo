@@ -1,5 +1,3 @@
-
-
 import Foundation
 import UIKit
 
@@ -9,7 +7,5 @@ class TabbarController: UITabBarController {
         UITabBar.appearance().barTintColor = .systemBackground
 
     }
-
-
 }
 

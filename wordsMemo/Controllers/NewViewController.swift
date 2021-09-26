@@ -1,22 +1,13 @@
-
-
 import UIKit
 import CoreData
 
-
 class NewViewController: UIViewController {
-    
     
     var searchController: UISearchController!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var switchBtn: UIBarButtonItem!
-    
-    
     
     var done = UIImage(systemName: "checkmark.circle")!.withRenderingMode(.alwaysTemplate)
     var donefill = UIImage(systemName: "checkmark.circle.fill")!.withRenderingMode(.alwaysTemplate)
-    
-    
     var words:[Words] = []
     var searchResults: [Words] = []
     var filteredNotCheked = [Words?]()
@@ -29,8 +20,6 @@ class NewViewController: UIViewController {
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
     }
-    
-    
     //編集用segueのidentifir
     private let segueEditTaskViewController = "SegueEditTaskViewController"
     
@@ -39,47 +28,32 @@ class NewViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         audioSwitch()
         setup()
-        getData()
+//        getData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getData()
     }
     
-    
     private func setup() {
-        
         
         searchController = UISearchController(searchResultsController: nil)
         //結果表示用のビューコントローラーに自分を設定する。
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        //searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "écrivez français"
-        
-        
         navigationItem.title = "Français"
         navigationController?.navigationBar.titleTextAttributes
             = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 25)!]
         
+        navigationItem.searchController = searchController
+        //Largeタイトル
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 45)!]
+        navigationItem.hidesSearchBarWhenScrolling = true
         
-        
-        if #available(iOS 11.0, *) {
-            // UISearchControllerをUINavigationItemのsearchControllerプロパティにセットする。
-            navigationItem.searchController = searchController
-            //Largeタイトル
-            navigationController?.navigationBar.prefersLargeTitles = true
-            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 45)!]
-            // trueだとスクロールした時にSearchBarを隠す（デフォルトはtrue）
-            // falseだとスクロール位置に関係なく常にSearchBarが表示される
-            navigationItem.hidesSearchBarWhenScrolling = true
-        } else {
-            tableView.tableHeaderView = searchController.searchBar
-        }
     }
     
-    
-    //フィルターかける、それをsearchResultsに詰める
     func filterContentForSearchText(_ searchText: String) {
         searchResults = words.filter { (word: Words) -> Bool in
             return (word.nameFr?.lowercased().contains(searchText.lowercased()))!
@@ -98,8 +72,7 @@ class NewViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: switchControl)
     }
     
-    @objc func switchValueDidChange(sender: UISwitch!)
-    {
+    @objc func switchValueDidChange(sender: UISwitch!) {
         
         if sender.isOn {
             getData()
@@ -108,15 +81,12 @@ class NewViewController: UIViewController {
         }
     }
     
-    // MARK:  - Segue Navigation
-    // RegisterViewにセルの情報を渡す
+    // MARK:  - Segue Navigation　RegisterViewにセルの情報を渡す
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationViewController = segue.destination as? RegisterViewController else { return }
         
-        
-        
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        
         //セルをタップした時
         if let indexPath = tableView.indexPathForSelectedRow, segue.identifier == segueEditTaskViewController {
             //検索してる時
@@ -150,7 +120,6 @@ class NewViewController: UIViewController {
 
 extension NewViewController: UITableViewDataSource, UITableViewDelegate {
     
-    
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
@@ -160,11 +129,10 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         return words.count
     }
     
-    
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordTableViewCell", for: indexPath)as! WordTableViewCell
-       
+        
         //統計計算用
         filteredNotCheked = words.filter { $0.checked == false }
         filteredChecked = words.filter { $0.checked == true }
@@ -200,19 +168,15 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         cell.checkButton.setImage(image, for: .normal)
         cell.checkButton.tintColor = word.checked ? #colorLiteral(red: 0.02745098039, green: 0.6, blue: 0.5725490196, alpha: 1) : .lightGray
         
-        
         return cell
     }
-    
     
     // MARK: - Save and Get data
     
     func getDataNotyet() {
         
-        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Words")
         fetchRequest.predicate = NSPredicate(format: "checked == false")
-        
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         words.removeAll()
@@ -241,8 +205,6 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.reloadData()
     }
     
-    //save
-    
     func saveItems() {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -256,43 +218,32 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.reloadData()
     }
     
+    // MARK: - SwipeAction(delete)
     
-    
-    // MARK: - SwipeAction
-
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        // 削除処理
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
             
-            //削除処理を記述
             context.delete(self.words[indexPath.row])
             self.words.remove(at: indexPath.row)
             self.saveItems()
             
-            // 実行結果に関わらず記述
             completionHandler(true)
-            
             action.image = UIImage(systemName: "trash")
         }
-        // 定義したアクションをセット
         return UISwipeActionsConfiguration(actions:[deleteAction])
     }
-    
-    
 }
 
-// MARK: - UISearchResultsUpdating
+// MARK: - UISearchResultsUpdating 検索した時の画面の動き
 
 extension NewViewController: UISearchResultsUpdating {
-    //検索した時の画面の動き
+    
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         filterContentForSearchText(searchBar.text!)
-        
     }
-    
 }
 
 extension NewViewController: WordTableViewCellDelegate {
@@ -307,8 +258,7 @@ extension NewViewController: WordTableViewCellDelegate {
         } else {
             words[indexPath.row].checked = !words[indexPath.row].checked
             words[indexPath.row].checkedDate = words[indexPath.row].checked ? date: nil
-        }
-        
+        }        
         saveItems()
     }
 }

@@ -1,10 +1,8 @@
-
 import Foundation
 import UIKit
 import MBCircularProgressBar
 import Charts
 import CoreData
-
 
 class StatisticsViewController: UIViewController {
     
@@ -14,8 +12,6 @@ class StatisticsViewController: UIViewController {
     @IBOutlet weak var chart: BarChartView!
     
     var dayChecekdMarkCounts = [Double]()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,16 +32,6 @@ class StatisticsViewController: UIViewController {
         setupChart()
         setData()
         
-        let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
-        //Navigation Controllerのトップ画面をView Controllerに指定する
-        let newvc = newController.topViewController as! NewViewController
-        
-        let checkedCount = newvc.filteredChecked.count
-        let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
-        
-        titleLabel1.text = "Fini 🥖： \(String(checkedCount))"
-        titleLabel2.text = "Le total： \(String(totalCount))"
-        
     }
     
     //回転をするたびにcircleグラフを再度表示
@@ -54,19 +40,19 @@ class StatisticsViewController: UIViewController {
     }
     
     func circle() {
-        
-        //Tab Bar ControllerでviewControllerの0番（NewViewController)をNavigation Controllerに指定して取り出す
+
         let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
-        //Navigation Controllerのトップ画面をView Controllerに指定する
-        let newvc = newController.topViewController as! NewViewController
+        let newvc = newController.viewControllers[0] as! NewViewController
         
         let checkedCount = newvc.filteredChecked.count
         let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
         
         progressCircle.value = (CGFloat(checkedCount) / CGFloat(totalCount)) * 100
         
+        titleLabel1.text = "Fini 🥖： \(String(checkedCount))"
+        titleLabel2.text = "Le total： \(String(totalCount))"
+        
     }
-    
     
     func getDataPoints(accuracy: [BarChartDataEntry]) -> [BarChartDataEntry] {
         var dataPoints: [BarChartDataEntry] = []
@@ -108,8 +94,6 @@ class StatisticsViewController: UIViewController {
                 let predicate = NSPredicate(format:"(checkedDate >= %@) AND (checkedDate <= %@)",start,end)
                 fetchRequest.predicate = predicate
                 
-                
-                //一致した日付をfetchDataに代入
                 let fetchData = try! context.fetch(fetchRequest)
                 
                 if !fetchData.isEmpty {
@@ -145,28 +129,24 @@ class StatisticsViewController: UIViewController {
     func setupChart() {
         
         //X軸設定
-        let dateFormatter = DateFormatter() //DateFormatterクラスをインスタンス化
-        dateFormatter.dateFormat = "M/d" //日付のフォーマット指定
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M/d"
         let cal = Calendar.current
         let date = Date() //これはforの外側に書く
         var fourDaysAgo = cal.date(byAdding: .day, value: -4, to: date)! //これはforの外側に書く
         var days = [String]()  //これはforの外側に書く
         
         for _ in 1 ... 5 {
-            let dataString = dateFormatter.string(from: fourDaysAgo) //dataをStringにする
-            days.append(dataString) //days配列に追加
+            let dataString = dateFormatter.string(from: fourDaysAgo)
+            days.append(dataString)
             fourDaysAgo = cal.date(byAdding: .day, value: 1, to: fourDaysAgo)!//dateを1日後の日付に変更
         }
         
-        
-        let formatter = DateValueFormatter(days: days) //DateValueFormatterを呼び出す
-        
+        let formatter = DateValueFormatter(days: days)
         chart.xAxis.valueFormatter = formatter
         
-        //labelCountはChartDataEntryと同じ数
-        chart.xAxis.labelCount = 5
-        //granularityは1.0で固定
-        chart.xAxis.granularity = 1.0
+        chart.xAxis.labelCount = 5//labelCountはChartDataEntryと同じ数
+        chart.xAxis.granularity = 1.0//granularityは1.0で固定
         chart.xAxis.labelPosition = .bottom //x軸ラベル下側に表示
         chart.xAxis.labelFont = UIFont.systemFont(ofSize: 15) //x軸のフォントの大きさ
         chart.xAxis.drawGridLinesEnabled = false
@@ -174,34 +154,26 @@ class StatisticsViewController: UIViewController {
         //y軸設定
         chart.rightAxis.enabled = false
         chart.leftAxis.enabled = true
-        
         chart.leftAxis.axisMinimum = 0.0 // Y座標の値が0始まりになるように設定
         chart.leftAxis.axisMaximum = 15.0
         chart.leftAxis.drawZeroLineEnabled = true
         chart.leftAxis.zeroLineColor = .systemGray
-        // ラベルの数を設定
-        chart.leftAxis.labelCount = 5
-        // ラベルの色を設定
-        chart.leftAxis.labelTextColor = .systemGray
-        // グリッドの色を設定
-        chart.leftAxis.gridColor = .systemGray
-        // y左軸線の表示
-        chart.leftAxis.drawAxisLineEnabled = false
+        chart.leftAxis.labelCount = 5// ラベルの数を設定
+        chart.leftAxis.labelTextColor = .systemGray// ラベルの色を設定
+        chart.leftAxis.gridColor = .systemGray// グリッドの色を設定
+        chart.leftAxis.drawAxisLineEnabled = false// y左軸線の表示
         
         //その他
         chart.legend.enabled = false //"■ months"のlegendの表示
         chart.animate(yAxisDuration: 1.5)
         chart.gridBackgroundColor = .systemBackground
-        
         chart.pinchZoomEnabled = false
         chart.drawBarShadowEnabled = false
         chart.drawBordersEnabled = false
         chart.doubleTapToZoomEnabled = false
         chart.drawGridBackgroundEnabled = true
-        //タップ時のハイライトを消す処理
-        chart.highlightPerTapEnabled = false
+        chart.highlightPerTapEnabled = false//タップ時のハイライトを消す処理
         chart.highlightPerDragEnabled = false
-        
         
     }
     
@@ -214,17 +186,16 @@ class StatisticsViewController: UIViewController {
 //x軸のラベル設定
 class DateValueFormatter: NSObject, IAxisValueFormatter {
     
-    let dateFormatter = DateFormatter() //DateFormatterクラスをインスタンス化
-    var days:[String]              //変数daysをString型
+    let dateFormatter = DateFormatter()
+    var days:[String]
     
-    init(days: [String]) {        //変数daysの初期化
+    init(days: [String]) {
         self.days = days
     }
     
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {  //IAxisValueFormatterとセット
         return days[Int(value)]
-    }
-    
+    }    
     
 }
 

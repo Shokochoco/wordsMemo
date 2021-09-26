@@ -1,21 +1,16 @@
-
 import UIKit
 import CoreData
 
-class RegisterViewController: UIViewController, UITextViewDelegate {
+class RegisterViewController: UIViewController {
     
     @IBOutlet weak var enText: UITextField!
     @IBOutlet weak var frText: UITextField!
     @IBOutlet weak var genderSwitch: UISegmentedControl!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var registerButton: UIButton!
-    
-    
     var words: Words? //セルをタップした時の編集情報の受け皿、最初はオプショナル
     var genderCategory = "Homme"
     var checkedCheck = false
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +34,6 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
         enText.layer.masksToBounds = true
         frText.layer.masksToBounds = true
         textView.layer.masksToBounds = true
-        
         //RegisterBtnデザイン
         registerButton.frame = CGRect(x: 0, y: 625, width: 287, height: 46)
         registerButton.backgroundColor = UIColor(named: "BaseColor")
@@ -59,43 +53,12 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
             }
             
             genderCategory = words.gender!
-            
             checkedCheck = words.checked ? words.checked : words.checked
-            
-            
         }
-        
         //他のところタッチしてキーボード閉じる
         let tapGR: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGR.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGR)
-        
-    }
-    
-    
-    
-    //他のところタッチしてキーボード閉じる
-    @objc func dismissKeyboard() {
-        self.view.endEditing(true)
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        //textView以外はview動かないようにする
-        if !textView.isFirstResponder {
-            return
-        }
-        
-        if self.view.frame.origin.y == 0 { //y座標が0の時
-            if let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                self.view.frame.origin.y -= keyboardRect.height // 始点y座標からキーボードのy座標を引いた地点を新しく始まるviewのy座標始点として代入
-            }
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,17 +84,14 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    // MARK: - Register Button
+    // MARK: - Register Button　新規登録時・編集時
     
-    
-    //新規登録時・編集時
     @IBAction func registerButton(_ sender: UIButton) {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let wordEnName = enText.text
         let wordFrName = frText.text
         let memoText = textView.text
-        
         
         if wordEnName == "" || wordFrName == "" {
             
@@ -143,14 +103,10 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
             present(alert, animated: true, completion: .none)
             
         } else {
-            
-            // 渡ってきたwordsが空なら（＝ ＋ボタンを押した時）、新しいWords型オブジェクトを作成する
+            // 渡ってきたwordsが空なら（つまり ＋ボタンを押した時）、新しいWords型オブジェクトを作成する
             if words == nil {
-                //contextの中にnewItemを作って用意
-                words = Words(context: context)
-                
+                words = Words(context: context) //contextの中に新規wordsを作る
             }
-            
             // 受け取ったオブジェクト（編集時）、または、先ほど新しく作成したオブジェクト（新規時）どちらもwordsにしてあるので、CoreDataに代入する
             if let words = words {
                 words.nameEn = wordEnName
@@ -160,27 +116,33 @@ class RegisterViewController: UIViewController, UITextViewDelegate {
                 words.checked = checkedCheck
             }
             
-            //保存
             (UIApplication.shared.delegate as! AppDelegate).saveContext()
             navigationController!.popViewController(animated: true)
         }
-        
-        
-    }
-    
-    
-    
-    
+    }   
 }
 
-
-/*
- // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
- // Get the new view controller using segue.destination.
- // Pass the selected object to the new view controller.
- }
- */
-
+extension RegisterViewController: UITextViewDelegate {
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        //textView以外はview動かないようにする
+        if !textView.isFirstResponder {
+            return
+        }
+        
+        if self.view.frame.origin.y == 0 {
+            if let keyboardRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                self.view.frame.origin.y -= keyboardRect.height // 始点y座標からキーボードのy座標を引いた地点を新しく始まるviewのy座標始点として代入
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+}

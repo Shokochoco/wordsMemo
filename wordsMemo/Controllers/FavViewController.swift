@@ -1,16 +1,12 @@
-
-
 import Foundation
 import UIKit
 import CoreData
 
 class FavViewController: UIViewController, UISearchResultsUpdating {
     
-    
     var searchController: UISearchController!
     var done = UIImage(systemName: "checkmark.circle")!.withRenderingMode(.alwaysTemplate)
     var donefill = UIImage(systemName: "checkmark.circle.fill")!.withRenderingMode(.alwaysTemplate)
-    
     var favorites: [Words] = []
     var searchResults: [Words] = []
     
@@ -24,14 +20,11 @@ class FavViewController: UIViewController, UISearchResultsUpdating {
         return searchController.isActive && !isSearchBarEmpty
     }
     
-    
     override func viewDidLoad() {
-        
         setup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         getData()
     }
     
@@ -41,21 +34,12 @@ class FavViewController: UIViewController, UISearchResultsUpdating {
             = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 25)!]
         
         searchController = UISearchController(searchResultsController: nil)
-        //結果表示用のビューコントローラーに自分を設定する。
-        searchController.searchResultsUpdater = self
+        searchController.searchResultsUpdater = self //結果表示用のビューコントローラーに自分を設定する。
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "écrivez français"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
         
-        if #available(iOS 11.0, *) {
-            // UISearchControllerをUINavigationItemのsearchControllerプロパティにセットする。
-            navigationItem.searchController = searchController
-            
-            // trueだとスクロールした時にSearchBarを隠す（デフォルトはtrue）
-            // falseだとスクロール位置に関係なく常にSearchBarが表示される
-            navigationItem.hidesSearchBarWhenScrolling = true
-        } else {
-            favTableView.tableHeaderView = searchController.searchBar
-        }
     }
     
     func filterContentForSearchText(_ searchText: String) {
@@ -72,9 +56,6 @@ class FavViewController: UIViewController, UISearchResultsUpdating {
         filterContentForSearchText(searchBar.text!)
         
     }
-    
-    
-    
 }
 
 extension FavViewController: UITableViewDelegate, UITableViewDataSource {
@@ -90,18 +71,15 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordTableViewCell", for: indexPath)as! WordTableViewCell
-        
         cell.selectionStyle = .none
-        
         let favorite: Words
+        
         if isFiltering {
             favorite = searchResults[indexPath.row]
         } else {
             favorite = favorites[indexPath.row]
         }
-        
         
         cell.wordEn.text = favorite.nameEn!
         cell.wordFr.text = favorite.nameFr!
@@ -128,31 +106,26 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - SwipeAction
     
-    
-    // スワイプした時に表示するアクションの定義
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        // 削除処理
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            //削除処理を記述
+            
             context.delete(self.favorites[indexPath.row])
             self.favorites.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            // 実行結果に関わらず記述
+            
             completionHandler(true)
             
             action.image = UIImage(systemName: "trash")
         }
-        // 定義したアクションをセット
+        
         return UISwipeActionsConfiguration(actions:[deleteAction])
     }
-    
     
     // MARK: - Save and Get data
     
     func getData() {
-        
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Words")
         fetchRequest.predicate = NSPredicate(format: "checked == true")
@@ -162,7 +135,7 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
         
         do {
             let favData =  try context.fetch(fetchRequest) as! [Words]
-            //favotitesに取得したデータを代入
+            
             favorites.append(contentsOf: favData)
             
         } catch {
@@ -170,8 +143,7 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         favTableView.reloadData()
-    }
-    
+    }    
 }
 
 
