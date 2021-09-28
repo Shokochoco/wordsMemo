@@ -15,7 +15,7 @@
 しかし、フランス語の名詞には性別があるので、性別の判断がつかなければ正しい文章を作れません。
 このアプリでは、スキマ時間にサクッと確認ができる名詞に特化し、性別ごと覚えられるように作りました。
 
-英語入力欄を大きめにしているので、英語訳から覚えられますし、英語も覚えられます。
+英語入力欄を大きめにしているので、英語訳から覚えられます。
 
 単語一つ一つに簡単なメモも登録しておけます。
 
@@ -23,7 +23,7 @@
 1, iPhoneでダウンロード(iOS13以降、iPad非対応）　
 https://apps.apple.com/jp/app/wordsmemo/id1584968314?l=en
 
-2, 右上の+ボタンから単語を登録してください。（日本語入力の箇所を英語にすると英語も覚えられます）
+2, 右上の+ボタンから単語を登録してください。
 
 3, 覚えたらチェックマークをつける
 
@@ -43,14 +43,14 @@ This app is designed to help you remember the gender of nouns, and you can quick
 Why only nouns?　
 The more verbs and nouns you can remember, the more sentences you can make and the more confident you will be. However, French nouns have a gender, so if you can't distinguish their gender, you won't be able to make the right sentences. 
 
-The English translations are large in this app, so you can learn from the English.( can learn both for non-native English speakers)
+The English translations are large in this app, so you can learn from the English.
 
 You can also register a simple memo for each word.
 
 ## How to use
 1, Download on your iPhone (iOS13 or later, iPad not supported)　
 　　　　　　https://apps.apple.com/jp/app/wordsmemo/id1584968314?l=en
-2, Click the + button on the top right to register a word. (You can also learn English words by changing the Japanese input box to English)
+2, Click the + button on the top right to register a word. 
 
 3, Put a check mark on your memory.
 
