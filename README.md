@@ -21,6 +21,7 @@
 
 ## 使い方
 1, iPhoneでダウンロード(iOS13以降、iPad非対応）　
+https://apps.apple.com/jp/app/wordsmemo/id1584968314?l=en
 
 2, 右上の+ボタンから単語を登録してください。（日本語入力の箇所を英語にすると英語も覚えられます）
 
@@ -30,6 +31,7 @@
 
 ## 作者
 @bonbon_dev
+
 
 
 🇬🇧
@@ -47,7 +49,7 @@ You can also register a simple memo for each word.
 
 ## How to use
 1, Download on your iPhone (iOS13 or later, iPad not supported)　
-
+　　　　　　https://apps.apple.com/jp/app/wordsmemo/id1584968314?l=en
 2, Click the + button on the top right to register a word. (You can also learn English words by changing the Japanese input box to English)
 
 3, Put a check mark on your memory.
