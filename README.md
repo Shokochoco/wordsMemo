@@ -28,7 +28,9 @@ https://apps.apple.com/jp/app/wordsmemo/id1584968314?l=en
 
 3, 覚えたらチェックマークをつける
 
-4, 覚えたデータを見てモチベーションを保つ
+4, 左上の切り替えボタンでチェックマーク無しのみを表示することができます。
+
+5, 覚えたデータを見てモチベーションを保つ
 
 ## 作者
 @bonbon_dev
@@ -57,7 +59,9 @@ https://apps.apple.com/jp/app/wordsmemo/id1584968314?l=en
 
 3, Put a check mark on your memory.
 
-4, See your memorized data to keep your motivation.
+4, Can see non-checked words clicking the swich button on the top left.
+
+5, See your progress to keep your motivation.
 
 ## Author
 @bonbon_dev
