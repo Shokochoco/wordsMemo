@@ -10,5 +10,9 @@ target 'wordsMemo' do
 use_frameworks!
 pod "MBCircularProgressBar"
 pod 'Charts'
+pod 'Firebase/Analytics'
+pod 'Firebase/Auth'
+pod 'Firebase/Firestore'
+pod 'Firebase/Storage'
 
 end

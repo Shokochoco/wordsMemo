@@ -8,7 +8,7 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var genderSwitch: UISegmentedControl!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var registerButton: UIButton!
-    var words: Words? //セルをタップした時の編集情報の受け皿、最初はオプショナル
+    var words: Words? 
     var genderCategory = "Homme"
     var checkedCheck = false
     
@@ -17,7 +17,6 @@ class RegisterViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
         // Textfield枠のカラー
         enText.layer.borderColor = UIColor.lightGray.cgColor
         frText.layer.borderColor = UIColor.lightGray.cgColor
@@ -39,7 +38,6 @@ class RegisterViewController: UIViewController {
         registerButton.backgroundColor = UIColor(named: "BaseColor")
         registerButton.setTitleColor(.white, for: UIControl.State.normal)
         registerButton.layer.cornerRadius = 10
-        
         // wordsに値が代入されてる状態（既存のものをクリックした時）、textFieldとsegmentedControlなどに元々入ってる値を代入
         if let words = words {
             
@@ -67,7 +65,6 @@ class RegisterViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = .black
         self.navigationController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
-    
     // MARK: - Gender Switch
     
     @IBAction func genderChanged(_ sender: UISegmentedControl) {
@@ -82,8 +79,7 @@ class RegisterViewController: UIViewController {
         default:
             print("反応しない")
         }
-    }
-    
+    }    
     // MARK: - Register Button　新規登録時・編集時
     
     @IBAction func registerButton(_ sender: UIButton) {

@@ -1,8 +1,10 @@
-//
-//  WelcomeViewController.swift
-//  wordsMemo
-//
-//  Created by 鈴木淳子 on 2021/10/10.
-//
-
 import Foundation
+import UIKit
+
+class WelcomeViewController: UIViewController {
+//    override func viewDidLoad() {
+//        let signup = UIStoryboard(name: "Signup", bundle: nil)
+//        let signupViewController = signup.instantiateViewController(identifier: "SignupViewController") as! SignupViewController
+//        self.present(signupViewController, animated: true, completion: nil)
+//    }
+}

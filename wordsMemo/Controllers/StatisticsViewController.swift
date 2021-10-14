@@ -7,10 +7,9 @@ import CoreData
 class StatisticsViewController: UIViewController {
     
     @IBOutlet weak var progressCircle: MBCircularProgressBarView!
-    @IBOutlet weak var titleLabel1: UILabel!
-    @IBOutlet weak var titleLabel2: UILabel!
     @IBOutlet weak var chart: BarChartView!
     
+    var myButtonItem: UIBarButtonItem!
     var dayChecekdMarkCounts = [Double]()
     
     override func viewDidLoad() {
@@ -18,7 +17,11 @@ class StatisticsViewController: UIViewController {
         
         setupChart()
         setData()
-        //回転を検知する
+        
+        let buttonImage = UIImage(systemName: "person.fill")
+        myButtonItem = UIBarButtonItem(image: buttonImage, style: .plain, target: self, action: #selector(myButtonPressed(_:)))
+        myButtonItem.tintColor = .label
+        self.navigationItem.rightBarButtonItem = myButtonItem
         NotificationCenter.default.addObserver(self, selector: #selector(orientationChange), name: UIDevice.orientationDidChangeNotification, object: nil)
         
     }
@@ -34,6 +37,20 @@ class StatisticsViewController: UIViewController {
         
     }
     
+    @objc func myButtonPressed(_ sender: UIBarButtonItem) {
+        let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
+        let newvc = newController.viewControllers[0] as! NewViewController
+        
+        let checkedCount = newvc.filteredChecked.count
+        let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mypageViewController = storyboard.instantiateViewController(withIdentifier: "mypage") as! MypageViewController
+        mypageViewController.finishNumber = checkedCount
+        mypageViewController.totalNumber = totalCount
+        self.present(mypageViewController, animated: true, completion: nil)
+    }
+    
     //回転をするたびにcircleグラフを再度表示
     @objc func orientationChange() {
         circle()
@@ -43,14 +60,11 @@ class StatisticsViewController: UIViewController {
 
         let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
         let newvc = newController.viewControllers[0] as! NewViewController
-        
+
         let checkedCount = newvc.filteredChecked.count
         let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
         
         progressCircle.value = (CGFloat(checkedCount) / CGFloat(totalCount)) * 100
-        
-        titleLabel1.text = "Fini 🥖： \(String(checkedCount))"
-        titleLabel2.text = "Le total： \(String(totalCount))"
         
     }
     

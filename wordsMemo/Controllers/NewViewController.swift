@@ -1,8 +1,9 @@
 import UIKit
 import CoreData
+import Firebase
 
 class NewViewController: UIViewController {
-    
+
     var searchController: UISearchController!
     @IBOutlet weak var tableView: UITableView!
     
@@ -28,7 +29,7 @@ class NewViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         audioSwitch()
         setup()
-//        getData()
+        gotoSignup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,6 +53,26 @@ class NewViewController: UIViewController {
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 45)!]
         navigationItem.hidesSearchBarWhenScrolling = true
         
+    }
+//    //感知　書く必要ある？
+//    override func viewDidAppear(_ animated: Bool) {
+//       confirmRegister()
+//    }
+//
+//    func confirmRegister() {
+//        if Auth.auth().currentUser?.uid != nil {
+//            //Login画面に遷移
+//
+//        }
+//            gotoSignup()
+//    }
+    
+    func gotoSignup () {
+        let storyboard = UIStoryboard(name: "Signup", bundle: nil)
+        let signupViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
+        let navigationController = UINavigationController(rootViewController: signupViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     func filterContentForSearchText(_ searchText: String) {
@@ -97,9 +118,9 @@ class NewViewController: UIViewController {
                 word = words[indexPath.row]
             }
             // 編集したいデータを取得
-            let editedWordEn = word.nameEn!
-            let editedWordFr = word.nameFr!
-            let editedGender = word.gender!
+            guard let editedWordEn = word.nameEn else { return }
+            guard let editedWordFr = word.nameFr else { return }
+            guard let editedGender = word.gender else { return }
             
             // 先ほど取得したnameとgenderに合致するデータのみをfetchするようにfetchRequestを作成
             let fetchRequest: NSFetchRequest<Words> = Words.fetchRequest()
