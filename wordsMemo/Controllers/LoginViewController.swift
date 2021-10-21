@@ -2,7 +2,7 @@ import UIKit
 import Firebase
 
 class LoginViewController: UIViewController {
-
+    
     @IBOutlet weak var mailText: UITextField!
     @IBOutlet weak var passText: UITextField!
     @IBOutlet weak var loginBtn: UIButton!
@@ -14,12 +14,10 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         setup()
         indicatorSetup()
-//        mailText.delegate = self
-//        passText.delegate = self
     }
     
     func setup() {
-                
+        
         loginBtn.frame = CGRect(x: 0, y: 625, width: 287, height: 46)
         loginBtn.setTitleColor(.white, for: UIControl.State.normal)
         loginBtn.layer.cornerRadius = 10
@@ -29,7 +27,7 @@ class LoginViewController: UIViewController {
         loginBtn.layer.shadowRadius = 5
         loginBtn.backgroundColor = #colorLiteral(red: 0, green: 0.6546586752, blue: 0.6037966609, alpha: 1)
         
-        mailText.text = "1@gmail.com"
+        mailText.text = "3@gmail.com"
         passText.text = "123456"
         mailText.placeholder = "✉️ mail"
         passText.placeholder = "🔑 password"
@@ -40,7 +38,7 @@ class LoginViewController: UIViewController {
     func indicatorSetup() {
         indicator.center = view.center
         indicator.style = UIActivityIndicatorView.Style.large
-        indicator.color = .gray
+        indicator.color = #colorLiteral(red: 0, green: 0.6113008261, blue: 0.5758315325, alpha: 0.8470000029)
         view.addSubview(indicator)
     }
     
@@ -51,13 +49,13 @@ class LoginViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-   
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    @IBAction func signinTapped(_ sender: UIButton) {
+    @IBAction func createAccountTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
     
@@ -67,7 +65,7 @@ class LoginViewController: UIViewController {
         
         Auth.auth().signIn(withEmail: email, password: pass) { (result, error) in
             if let error = error {
-                let dialog = UIAlertController(title: "ログイン失敗", message: error.localizedDescription, preferredStyle: .alert)
+                let dialog = UIAlertController(title: "Log In failed", message: error.localizedDescription, preferredStyle: .alert)
                 dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(dialog, animated: true, completion: nil)
                 return
@@ -88,27 +86,53 @@ class LoginViewController: UIViewController {
     func userInfoFromFireStore() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        Firestore.firestore().collection("users").document(uid).getDocument { [self] (snapshot, error) in
+        Firestore.firestore().collection("users").document(uid).getDocument { [weak self] (snapshot, error) in
             if let error = error {
-              print("FireStoreから取得失敗", error)
-              return
+                print("FireStoreから取得失敗", error)
+                return
             }
             if let data = snapshot?.data() {
                 print("FireStoreから取得成功\(data)")
             }
         }
-
+        
     }
+    @IBAction func forgotPassTapped(_ sender: UIButton) {
+
+        var alertTextField: UITextField?
+        
+        let alert = UIAlertController(
+            title: "Reset Password",
+            message: "We will send you a link to reset your password",
+            preferredStyle: UIAlertController.Style.alert)
+        alert.addTextField(
+            configurationHandler: {(textField: UITextField!) in
+                textField.placeholder = "Enter your email"
+                alertTextField = textField
+            })
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: UIAlertAction.Style.cancel,
+                handler: nil))
+        alert.addAction(
+            UIAlertAction(
+                title: "OK",
+                style: UIAlertAction.Style.default) { _ in
+                guard let email = alertTextField?.text else { return }
+                Auth.auth().sendPasswordReset(withEmail: email) { error in
+                    if let error = error {
+                        let failedlog = UIAlertController(title: "Failed", message: "Please make sure your email adress", preferredStyle: .alert)
+                        failedlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    } else {
+                        let successlog = UIAlertController(title: "Succeed", message: "Check your email box.", preferredStyle: .alert)
+                        successlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    }
+                }
+                
+            })
+        self.present(alert, animated: true, completion: nil)
+        }
     
-    func gotoNewViewController () {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyboard.instantiateViewController(withIdentifier: "newView") as! NewViewController
-        //ナビゲーションで遷移
-        navigationController?.pushViewController(newViewController, animated: true)
-    }
-
 }
 
-extension LoginViewController: UITextFieldDelegate {
-    
-}

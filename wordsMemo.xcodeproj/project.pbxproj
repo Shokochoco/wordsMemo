@@ -11,6 +11,12 @@
 		D8049FE5271206D800A6FEFD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8049FE4271206D800A6FEFD /* LoginViewController.swift */; };
 		D8049FF22712C18500A6FEFD /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8049FF12712C18500A6FEFD /* Login.storyboard */; };
 		D810154A26C8130F00B56DA7 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D810154926C8130F00B56DA7 /* TabbarController.swift */; };
+		D822B1CA271EFBDA00A3CE98 /* NavigationOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D822B1C9271EFBDA00A3CE98 /* NavigationOrientation.swift */; };
+		D84534E227197BD3004E371A /* NewsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84534E027197BD3004E371A /* NewsCollectionViewCell.swift */; };
+		D84534E327197BD3004E371A /* NewsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D84534E127197BD3004E371A /* NewsCollectionViewCell.xib */; };
+		D84534E727198381004E371A /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84534E627198381004E371A /* NewsViewController.swift */; };
+		D84534EB271AA533004E371A /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84534EA271AA533004E371A /* ApiManager.swift */; };
+		D84534EE271AAB99004E371A /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84534ED271AAB99004E371A /* NewsModel.swift */; };
 		D8A8D6C426A1D4B40005457E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8D6C326A1D4B40005457E /* AppDelegate.swift */; };
 		D8A8D6C626A1D4B40005457E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8D6C526A1D4B40005457E /* SceneDelegate.swift */; };
 		D8A8D6C826A1D4B40005457E /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8D6C726A1D4B40005457E /* NewViewController.swift */; };
@@ -21,6 +27,7 @@
 		D8A8D6DD26A1DB790005457E /* FavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8D6DC26A1DB790005457E /* FavViewController.swift */; };
 		D8A8D6E026A1DB920005457E /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8D6DF26A1DB920005457E /* StatisticsViewController.swift */; };
 		D8A8D6E826A4115F0005457E /* WordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A8D6E726A4115F0005457E /* WordTableViewCell.swift */; };
+		D8B35118271B4B430045DAA7 /* NewsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B35117271B4B430045DAA7 /* NewsData.swift */; };
 		D8C9C25B270EE849001344A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D8C9C25A270EE849001344A5 /* GoogleService-Info.plist */; };
 		D8C9C2A3270F3CE4001344A5 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9C2A2270F3CE4001344A5 /* SignupViewController.swift */; };
 		D8C9C2C027106159001344A5 /* Signup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8C9C2BF27106159001344A5 /* Signup.storyboard */; };
@@ -35,6 +42,12 @@
 		D8049FE4271206D800A6FEFD /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D8049FF12712C18500A6FEFD /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		D810154926C8130F00B56DA7 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
+		D822B1C9271EFBDA00A3CE98 /* NavigationOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationOrientation.swift; sourceTree = "<group>"; };
+		D84534E027197BD3004E371A /* NewsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCollectionViewCell.swift; sourceTree = "<group>"; };
+		D84534E127197BD3004E371A /* NewsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCollectionViewCell.xib; sourceTree = "<group>"; };
+		D84534E627198381004E371A /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		D84534EA271AA533004E371A /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		D84534ED271AAB99004E371A /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		D8A8D6C026A1D4B40005457E /* wordsMemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wordsMemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8A8D6C326A1D4B40005457E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8A8D6C526A1D4B40005457E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +60,7 @@
 		D8A8D6DC26A1DB790005457E /* FavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavViewController.swift; sourceTree = "<group>"; };
 		D8A8D6DF26A1DB920005457E /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		D8A8D6E726A4115F0005457E /* WordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTableViewCell.swift; sourceTree = "<group>"; };
+		D8B35117271B4B430045DAA7 /* NewsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsData.swift; sourceTree = "<group>"; };
 		D8C9C25A270EE849001344A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D8C9C2A2270F3CE4001344A5 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		D8C9C2BF27106159001344A5 /* Signup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Signup.storyboard; sourceTree = "<group>"; };
@@ -99,6 +113,7 @@
 			children = (
 				D8A8D6C326A1D4B40005457E /* AppDelegate.swift */,
 				D8A8D6C526A1D4B40005457E /* SceneDelegate.swift */,
+				D8FDE15327155C0600A73A4E /* UserModel.swift */,
 				D8F98BF826A46E2600907544 /* Model */,
 				D8A8D6E226A1DB990005457E /* Controllers */,
 				D8A8D6E526A2CE570005457E /* View */,
@@ -114,11 +129,13 @@
 			isa = PBXGroup;
 			children = (
 				D8C9C2A2270F3CE4001344A5 /* SignupViewController.swift */,
+				D822B1C9271EFBDA00A3CE98 /* NavigationOrientation.swift */,
 				D8049FE4271206D800A6FEFD /* LoginViewController.swift */,
 				D810154926C8130F00B56DA7 /* TabbarController.swift */,
 				D8A8D6C726A1D4B40005457E /* NewViewController.swift */,
 				D8F98BFD26A5918E00907544 /* RegisterViewController.swift */,
 				D8A8D6DC26A1DB790005457E /* FavViewController.swift */,
+				D84534E627198381004E371A /* NewsViewController.swift */,
 				D8A8D6DF26A1DB920005457E /* StatisticsViewController.swift */,
 				D8FDE1582715797300A73A4E /* MypageViewController.swift */,
 			);
@@ -129,6 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				D8A8D6E726A4115F0005457E /* WordTableViewCell.swift */,
+				D84534E027197BD3004E371A /* NewsCollectionViewCell.swift */,
+				D84534E127197BD3004E371A /* NewsCollectionViewCell.xib */,
 				D8FDE15127155A7800A73A4E /* Storyboard */,
 			);
 			path = View;
@@ -138,7 +157,9 @@
 			isa = PBXGroup;
 			children = (
 				D8A8D6CC26A1D4B40005457E /* wordsMemo.xcdatamodeld */,
-				D8FDE15327155C0600A73A4E /* UserModel.swift */,
+				D84534ED271AAB99004E371A /* NewsModel.swift */,
+				D8B35117271B4B430045DAA7 /* NewsData.swift */,
+				D84534EA271AA533004E371A /* ApiManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -221,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D84534E327197BD3004E371A /* NewsCollectionViewCell.xib in Resources */,
 				D8C9C2C027106159001344A5 /* Signup.storyboard in Resources */,
 				D8A8D6D326A1D4BE0005457E /* LaunchScreen.storyboard in Resources */,
 				D8049FF22712C18500A6FEFD /* Login.storyboard in Resources */,
@@ -279,16 +301,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D84534EB271AA533004E371A /* ApiManager.swift in Sources */,
 				D8049FE5271206D800A6FEFD /* LoginViewController.swift in Sources */,
+				D84534E227197BD3004E371A /* NewsCollectionViewCell.swift in Sources */,
 				D8A8D6C826A1D4B40005457E /* NewViewController.swift in Sources */,
+				D84534E727198381004E371A /* NewsViewController.swift in Sources */,
+				D822B1CA271EFBDA00A3CE98 /* NavigationOrientation.swift in Sources */,
 				D8C9C2A3270F3CE4001344A5 /* SignupViewController.swift in Sources */,
 				D8FDE1592715797300A73A4E /* MypageViewController.swift in Sources */,
 				D8A8D6DD26A1DB790005457E /* FavViewController.swift in Sources */,
+				D8B35118271B4B430045DAA7 /* NewsData.swift in Sources */,
 				D8A8D6C426A1D4B40005457E /* AppDelegate.swift in Sources */,
 				D8A8D6C626A1D4B40005457E /* SceneDelegate.swift in Sources */,
 				D8A8D6E826A4115F0005457E /* WordTableViewCell.swift in Sources */,
 				D8A8D6E026A1DB920005457E /* StatisticsViewController.swift in Sources */,
 				D8A8D6CE26A1D4B40005457E /* wordsMemo.xcdatamodeld in Sources */,
+				D84534EE271AAB99004E371A /* NewsModel.swift in Sources */,
 				D810154A26C8130F00B56DA7 /* TabbarController.swift in Sources */,
 				D8FDE15427155C0600A73A4E /* UserModel.swift in Sources */,
 				D8F98BFE26A5918E00907544 /* RegisterViewController.swift in Sources */,

@@ -47,8 +47,8 @@ class MypageViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        finishCount.text = "Finished 🥖：\(finishNumber) words"
-        total.text = "Total 🍷： \(totalNumber) words"
+        finishCount.text = "Fini 🥖：\(finishNumber) mots"
+        total.text = "Total 🍷： \(totalNumber) mots"
         userInfoFromFireStore()
         
     }
@@ -63,31 +63,31 @@ class MypageViewController: UIViewController {
     }
 
     @IBAction func nameEditTapped(_ sender: UIButton) {
+    
+        if nameEditBtn.isEnabled {
+            nameText.isEnabled = true
+
+            let edit = UIImage(systemName: "pencil.circle")
+            nameEditBtn.setImage(edit, for: .normal)
+            print("true")
+            func changeInformation() {
+                let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                changeRequest?.displayName = nameText.text
+                changeRequest?.commitChanges { error in
+            print(error)
+                }
+             }
+            nameEditBtn.isEnabled = false
+        }
         
-        
-        
-//        if nameEditBtn.isEnabled {
-//            nameText.isEnabled = true
-//
-//            let edit = UIImage(systemName: "pencil.circle")
-//            nameEditBtn.setImage(edit, for: .normal)
-//            print("true")
-//            func changeInformation() {
-//                let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-//                changeRequest?.displayName = nameText.text
-//                changeRequest?.commitChanges { error in
-//            print(error)
-//                }
-//        }
-//        }
-//        if nameEditBtn.isEnabled == false {
-//            let done = UIImage(systemName: "pencil.circle.fill")
-//            nameEditBtn.setImage(done, for: .normal)
-//            print("false")
-//
-//            nameEditBtn.isEnabled = false
-//            nameEditBtn.isEnabled = !nameEditBtn.isEnabled
-//        }
+        if nameEditBtn.isEnabled == false {
+            let done = UIImage(systemName: "pencil.circle.fill")
+            nameEditBtn.setImage(done, for: .normal)
+            print("false")
+
+            nameEditBtn.isEnabled = true
+            nameEditBtn.isEnabled = !nameEditBtn.isEnabled
+        }
     
 }
     func userInfoFromFireStore() {
@@ -115,22 +115,33 @@ class MypageViewController: UIViewController {
             signupViewController.modalPresentationStyle = .fullScreen
             self.present(signupViewController, animated: true, completion: nil)
         } catch {
-            print("ログアウト失敗\(error)")
+            let failedlog = UIAlertController(title: "Log Out Failed", message: " ", preferredStyle: .alert)
+            failedlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         }
     }
+    
     @IBAction func deleteBtnTapped(_ sender: UIButton) {
-        let user = Auth.auth().currentUser
+        
+        let alert = UIAlertController(title: "Are you sure ?", message: "You can not cancel if you tap OK.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel",style: UIAlertAction.Style.cancel,handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+            
+            let user = Auth.auth().currentUser
 
-        user?.delete { error in
-          if let error = error {
-            print("アカウント削除できませんでした\(error)")
-          } else {
-            let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-            let signupViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
-            signupViewController.modalPresentationStyle = .fullScreen
-            self.present(signupViewController, animated: true, completion: nil)
-          }
-        }
+            user?.delete { error in
+              if let error = error {
+                print("アカウント削除できませんでした\(error)")
+                let failedAccount = UIAlertController(title: "Delete your account Failed", message: " ", preferredStyle: .alert)
+                failedAccount.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+              } else {
+                let storyboard = UIStoryboard(name: "Signup", bundle: nil)
+                let signupViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
+                signupViewController.modalPresentationStyle = .fullScreen
+                self.present(signupViewController, animated: true, completion: nil)
+              }
+            }
+        })
+        self.present(alert, animated: true, completion: nil)
     }
     
 }

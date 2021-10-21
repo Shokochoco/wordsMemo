@@ -15,14 +15,13 @@ class SignupViewController:UIViewController {
     override func viewDidLoad() {
         setup()
         indicatorSetup()
-        
     }
     
     func setup() {
         view.backgroundColor = #colorLiteral(red: 0, green: 0.6112995148, blue: 0.5753389001, alpha: 1)
-        nameText.delegate = self
-        mailText.delegate = self
-        passText.delegate = self
+//        nameText.delegate = self
+//        mailText.delegate = self
+//        passText.delegate = self
         
         signupBtn.frame = CGRect(x: 0, y: 625, width: 287, height: 46)
         signupBtn.setTitleColor(.white, for: UIControl.State.normal)
@@ -47,7 +46,7 @@ class SignupViewController:UIViewController {
     func indicatorSetup() {
         indicator.center = view.center
         indicator.style = UIActivityIndicatorView.Style.large
-        indicator.color = UIColor(red: 44/255, green: 169/255, blue: 225/255, alpha: 1)
+        indicator.color = .white
         view.addSubview(indicator)
     }
     
@@ -67,12 +66,11 @@ class SignupViewController:UIViewController {
     @IBAction func newRegisterBtn(_ sender: Any) {
         guard let  email = mailText.text else { return }
         guard let password = passText.text else { return }
-        //        guard let name = nameText.text else { return }
         
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("FirebaseAuthへの保存に失敗しました。\(error)")
-                let dialog = UIAlertController(title: "新規登録失敗", message: error.localizedDescription, preferredStyle: .alert)
+                let dialog = UIAlertController(title: "Sign Up Failed", message: error.localizedDescription, preferredStyle: .alert)
                 dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(dialog, animated: true, completion: nil)
             } else {
@@ -137,17 +135,18 @@ extension UITextField {
     }
 }
 
-extension SignupViewController: UITextFieldDelegate {
-    
-    //    func textFieldDidChangeSelection(_ textField: UITextField) {
-    //        let emailIsEmpty = nameText.text?.isEmpty ?? true
-    //        let passIsEmpty = passText.text?.isEmpty ?? true
-    //        let nameIsEmpty = nameText.text?.isEmpty ?? true
-    //
-    //        if emailIsEmpty || passIsEmpty || nameIsEmpty {
-    //            signupBtn.isEnabled = false
-    //        } else {
-    //            signupBtn.isEnabled = true
-    //        }
-    //    }
-}
+//extension SignupViewController: UITextFieldDelegate {
+//
+//        func textFieldDidChangeSelection(_ textField: UITextField) {
+//            let emailIsEmpty = nameText.text?.isEmpty ?? true
+//            let passIsEmpty = passText.text?.isEmpty ?? true
+//            let nameIsEmpty = nameText.text?.isEmpty ?? true
+//
+//            if emailIsEmpty || passIsEmpty || nameIsEmpty {
+//                signupBtn.isEnabled = false
+//            } else {
+//                signupBtn.isEnabled = true
+//            }
+//        }
+//}
+
