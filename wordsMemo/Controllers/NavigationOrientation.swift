@@ -1,24 +1,22 @@
 import Foundation
 import UIKit
 
-extension UINavigationController {
+struct AppUtility {
 
-    open override var shouldAutorotate: Bool {
-
-        if let vc = viewControllers.last {
-            return vc.shouldAutorotate
-        } else {
-            return true
+    static func lockOrientation(_ orientation: UIInterfaceOrientationMask) {
+    
+        if let delegate = UIApplication.shared.delegate as? AppDelegate {
+            delegate.orientationLock = orientation
         }
     }
 
-    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        
-        if let vc = viewControllers.last {
-            return vc.supportedInterfaceOrientations
-        } else {
-            return .portrait
-        }
+    /// OPTIONAL Added method to adjust lock and rotate to the desired orientation
+    static func lockOrientation(_ orientation: UIInterfaceOrientationMask, andRotateTo rotateOrientation:UIInterfaceOrientation) {
+   
+        self.lockOrientation(orientation)
+    
+        UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
+        UINavigationController.attemptRotationToDeviceOrientation()
     }
 
 }

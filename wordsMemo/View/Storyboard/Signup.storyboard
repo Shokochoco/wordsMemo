@@ -109,10 +109,10 @@
             </objects>
             <point key="canvasLocation" x="1026.0869565217392" y="-692.41071428571422"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation Orientation Controller-->
         <scene sceneID="CzA-Np-GhX">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gk4-aG-d8S" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationStart" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gk4-aG-d8S" customClass="NavigationOrientationController" customModule="wordsMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Sw1-ju-LhN">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

@@ -6,14 +6,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-//        let window = UIWindow(windowScene: scene as! UIWindowScene)
-//        self.window = window
-//        window.makeKeyAndVisible()
-//
-//        let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-//        let signupViewController = storyboard.instantiateViewController(identifier: "SignupViewController")
-//        window.rootViewController = signupViewController
-        
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 

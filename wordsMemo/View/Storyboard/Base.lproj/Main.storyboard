@@ -769,6 +769,14 @@
                                     <action selector="logoutTapped:" destination="DXh-96-1aT" eventType="touchUpInside" id="Bph-Ea-yKo"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQA-JV-w31">
+                                <rect key="frame" x="184" y="541" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="backTapped:" destination="DXh-96-1aT" eventType="touchUpInside" id="5Tz-S6-afy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GYS-DS-zDZ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

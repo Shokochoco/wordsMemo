@@ -21,6 +21,7 @@ class MypageViewController: UIViewController {
         super.viewDidLoad()
         setup()
         nameText.isEnabled = false
+        AppUtility.lockOrientation(.portrait)
     }
     
     func setup() {
@@ -50,7 +51,12 @@ class MypageViewController: UIViewController {
         finishCount.text = "Fini 🥖：\(finishNumber) mots"
         total.text = "Total 🍷： \(totalNumber) mots"
         userInfoFromFireStore()
+        AppUtility.lockOrientation(.portrait)
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        AppUtility.lockOrientation(.all)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -106,14 +112,17 @@ class MypageViewController: UIViewController {
             }
         }
     }
+    @IBAction func backTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func logoutTapped(_ sender: Any) {
         do {
             try Auth.auth().signOut()
             let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-            let signupViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
-            signupViewController.modalPresentationStyle = .fullScreen
-            self.present(signupViewController, animated: true, completion: nil)
+            let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
+            navigationStart.modalPresentationStyle = .fullScreen
+            self.present(navigationStart, animated: true, completion: nil)
         } catch {
             let failedlog = UIAlertController(title: "Log Out Failed", message: " ", preferredStyle: .alert)
             failedlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -135,9 +144,9 @@ class MypageViewController: UIViewController {
                 failedAccount.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
               } else {
                 let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-                let signupViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
-                signupViewController.modalPresentationStyle = .fullScreen
-                self.present(signupViewController, animated: true, completion: nil)
+                let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
+                navigationStart.modalPresentationStyle = .fullScreen
+                self.present(navigationStart, animated: true, completion: nil)
               }
             }
         })

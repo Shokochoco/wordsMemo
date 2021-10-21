@@ -48,6 +48,7 @@ class StatisticsViewController: UIViewController {
         let mypageViewController = storyboard.instantiateViewController(withIdentifier: "mypage") as! MypageViewController
         mypageViewController.finishNumber = checkedCount
         mypageViewController.totalNumber = totalCount
+        mypageViewController.modalPresentationStyle = .fullScreen
         self.present(mypageViewController, animated: true, completion: nil)
     }
     
