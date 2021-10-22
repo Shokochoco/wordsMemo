@@ -3,14 +3,12 @@ import UIKit
 import Firebase
 
 class MypageViewController: UIViewController {
-
+    
     @IBOutlet weak var nameText: UITextField!
     @IBOutlet weak var mailText: UITextField!
     @IBOutlet weak var finishCount: UILabel!
     @IBOutlet weak var total: UILabel!
     @IBOutlet weak var logout: UIButton!
-    @IBOutlet weak var nameEditBtn: UIButton!
-    @IBOutlet weak var mailEdit: UIButton!
     @IBOutlet weak var deleteBtn: UIButton!
     
     var finishNumber:Int = 0
@@ -20,14 +18,15 @@ class MypageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        nameText.isEnabled = false
         AppUtility.lockOrientation(.portrait)
+        nameText.delegate = self
+        mailText.isEnabled = false
     }
     
     func setup() {
         scoreView.layer.cornerRadius = 10
         scoreView.layer.masksToBounds = false
-
+        
         scoreView.layer.shadowColor = UIColor.black.cgColor
         scoreView.layer.shadowOffset = CGSize(width: 5, height: 5)
         scoreView.layer.shadowOpacity = 0.5
@@ -67,42 +66,14 @@ class MypageViewController: UIViewController {
         textField.resignFirstResponder()
         return true
     }
-
-    @IBAction func nameEditTapped(_ sender: UIButton) {
     
-        if nameEditBtn.isEnabled {
-            nameText.isEnabled = true
-
-            let edit = UIImage(systemName: "pencil.circle")
-            nameEditBtn.setImage(edit, for: .normal)
-            print("true")
-            func changeInformation() {
-                let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                changeRequest?.displayName = nameText.text
-                changeRequest?.commitChanges { error in
-            print(error)
-                }
-             }
-            nameEditBtn.isEnabled = false
-        }
-        
-        if nameEditBtn.isEnabled == false {
-            let done = UIImage(systemName: "pencil.circle.fill")
-            nameEditBtn.setImage(done, for: .normal)
-            print("false")
-
-            nameEditBtn.isEnabled = true
-            nameEditBtn.isEnabled = !nameEditBtn.isEnabled
-        }
-    
-}
     func userInfoFromFireStore() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { fatalError() }
         
         Firestore.firestore().collection("users").document(uid).getDocument { [self] (snapshot, error) in
             if let error = error {
-              print("FireStoreから取得失敗", error)
-              return
+                print("FireStoreから取得失敗", error)
+                return
             }
             if let data = snapshot?.data() {
                 print("FireStoreから取得成功\(data)")
@@ -112,6 +83,55 @@ class MypageViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func updateEmailTapped(_ sender: Any) {
+        var alertTextField: UITextField?
+        
+        let alert = UIAlertController(title: "Change Email",message: "We will send you a link to confirm your new email", preferredStyle: UIAlertController.Style.alert)
+        alert.addTextField(configurationHandler: {(textField: UITextField!) in
+            textField.placeholder = "Enter your new email"
+            alertTextField = textField
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel",style: UIAlertAction.Style.cancel,handler: nil))
+        alert.addAction( UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { _ in
+            guard let email = alertTextField?.text else { return }
+            Auth.auth().currentUser?.updateEmail(to: email) { error in
+                if let error = error {
+                    print("update失敗")
+                    let failedlog = UIAlertController(title: "Failed", message: "Please make sure your email adress", preferredStyle: .alert)
+                    failedlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(failedlog, animated: true, completion: nil)
+                } else {
+                    Auth.auth().currentUser?.sendEmailVerification { error in
+                        if let error = error {
+                            print("sendメッセージ失敗")
+                        } else {
+                            guard let uid = Auth.auth().currentUser?.uid else { fatalError() }
+                            Firestore.firestore().collection("users").document(uid).updateData([
+                                "email": email
+                            ]) { err in
+                                if let err = err {
+                                    print("Error updating document: \(err)")
+                                } else {
+                                    print("Document successfully updated")
+                                }
+                            }
+                            print("sendメッセージ成功")
+                            let successlog = UIAlertController(title: "Succeed", message: "Check your email box.", preferredStyle: .alert)
+                            //closureでOK押したら最初の画面に戻った方がいい？
+                            successlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(successlog, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+            
+        })
+                
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func backTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -136,18 +156,18 @@ class MypageViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
             
             let user = Auth.auth().currentUser
-
+            
             user?.delete { error in
-              if let error = error {
-                print("アカウント削除できませんでした\(error)")
-                let failedAccount = UIAlertController(title: "Delete your account Failed", message: " ", preferredStyle: .alert)
-                failedAccount.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-              } else {
-                let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-                let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
-                navigationStart.modalPresentationStyle = .fullScreen
-                self.present(navigationStart, animated: true, completion: nil)
-              }
+                if let error = error {
+                    print("アカウント削除できませんでした\(error)")
+                    let failedAccount = UIAlertController(title: "Delete your account Failed", message: " ", preferredStyle: .alert)
+                    failedAccount.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                } else {
+                    let storyboard = UIStoryboard(name: "Signup", bundle: nil)
+                    let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
+                    navigationStart.modalPresentationStyle = .fullScreen
+                    self.present(navigationStart, animated: true, completion: nil)
+                }
             }
         })
         self.present(alert, animated: true, completion: nil)
@@ -155,3 +175,22 @@ class MypageViewController: UIViewController {
     
 }
 
+extension MypageViewController: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        
+        guard let uid = Auth.auth().currentUser?.uid else { fatalError() }
+        let ref = Firestore.firestore().collection("users").document(uid)
+        print("ok")
+        ref.updateData([
+            "name": nameText.text ?? ""
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    
+}

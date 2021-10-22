@@ -129,9 +129,11 @@ class LoginViewController: UIViewController {
                     if let error = error {
                         let failedlog = UIAlertController(title: "Failed", message: "Please make sure your email adress", preferredStyle: .alert)
                         failedlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(failedlog, animated: true, completion: nil)
                     } else {
                         let successlog = UIAlertController(title: "Succeed", message: "Check your email box.", preferredStyle: .alert)
                         successlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(successlog, animated: true, completion: nil)
                     }
                 }
                 
