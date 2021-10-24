@@ -3,20 +3,15 @@ import Firebase
 
 class LoginViewController: UIViewController {
     
-    @IBOutlet weak var mailText: UITextField!
-    @IBOutlet weak var passText: UITextField!
-    @IBOutlet weak var loginBtn: UIButton!
-    @IBOutlet weak var signupBtn: UIButton!
+    @IBOutlet private weak var mailText: UITextField!
+    @IBOutlet private weak var passText: UITextField!
+    @IBOutlet private weak var loginBtn: UIButton!
+    @IBOutlet private weak var signupBtn: UIButton!
     
-    var indicator = UIActivityIndicatorView()
+    private var indicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        indicatorSetup()
-    }
-    
-    func setup() {
         
         loginBtn.frame = CGRect(x: 0, y: 625, width: 287, height: 46)
         loginBtn.setTitleColor(.white, for: UIControl.State.normal)
@@ -26,16 +21,12 @@ class LoginViewController: UIViewController {
         loginBtn.layer.shadowColor = UIColor.black.cgColor
         loginBtn.layer.shadowRadius = 5
         loginBtn.backgroundColor = #colorLiteral(red: 0, green: 0.6546586752, blue: 0.6037966609, alpha: 1)
-        
-        mailText.text = "3@gmail.com"
-        passText.text = "123456"
+
         mailText.placeholder = "✉️ mail"
         passText.placeholder = "🔑 password"
         mailText.addBorderBottom(height: 1.0, color: UIColor.lightGray)
         passText.addBorderBottom(height: 1.0, color: UIColor.lightGray)
-    }
-    
-    func indicatorSetup() {
+        
         indicator.center = view.center
         indicator.style = UIActivityIndicatorView.Style.large
         indicator.color = #colorLiteral(red: 0, green: 0.6113008261, blue: 0.5758315325, alpha: 0.8470000029)
@@ -55,16 +46,16 @@ class LoginViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    private func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    @IBAction func createAccountTapped(_ sender: UIButton) {
+    @IBAction private func createAccountTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func loginTapped(_ sender: UIButton) {
+    @IBAction private func loginTapped(_ sender: UIButton) {
         guard let email = mailText.text else { return }
         guard let pass = passText.text else { return }
         
@@ -75,10 +66,8 @@ class LoginViewController: UIViewController {
                 self.present(dialog, animated: true, completion: nil)
                 return
             }
-            print("ログイン成功")
             DispatchQueue.main.async {
                 self.indicator.startAnimating()
-                //FireStoreからuid情報を取る
                 self.userInfoFromFireStore()
             }
             DispatchQueue.main.async {
@@ -88,7 +77,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func userInfoFromFireStore() {
+    private func userInfoFromFireStore() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         Firestore.firestore().collection("users").document(uid).getDocument { [weak self] (snapshot, error) in
@@ -102,28 +91,18 @@ class LoginViewController: UIViewController {
         }
         
     }
-    @IBAction func forgotPassTapped(_ sender: UIButton) {
+    @IBAction private func forgotPassTapped(_ sender: UIButton) {
 
         var alertTextField: UITextField?
         
-        let alert = UIAlertController(
-            title: "Reset Password",
-            message: "We will send you a link to reset your password",
-            preferredStyle: UIAlertController.Style.alert)
-        alert.addTextField(
-            configurationHandler: {(textField: UITextField!) in
+        let alert = UIAlertController(title: "Reset Password",message: "We will send you a link to reset your password", preferredStyle: UIAlertController.Style.alert)
+        alert.addTextField(configurationHandler: {(textField: UITextField!) in
                 textField.placeholder = "Enter your email"
                 alertTextField = textField
             })
-        alert.addAction(
-            UIAlertAction(
-                title: "Cancel",
-                style: UIAlertAction.Style.cancel,
-                handler: nil))
-        alert.addAction(
-            UIAlertAction(
-                title: "OK",
-                style: UIAlertAction.Style.default) { _ in
+        alert.addAction(UIAlertAction(title: "Cancel",style: UIAlertAction.Style.cancel,handler: nil))
+        alert.addAction(UIAlertAction(title: "OK",style: UIAlertAction.Style.default) { _ in
+            
                 guard let email = alertTextField?.text else { return }
                 Auth.auth().sendPasswordReset(withEmail: email) { error in
                     if let error = error {
@@ -135,8 +114,7 @@ class LoginViewController: UIViewController {
                         successlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(successlog, animated: true, completion: nil)
                     }
-                }
-                
+                }                
             })
         self.present(alert, animated: true, completion: nil)
         }

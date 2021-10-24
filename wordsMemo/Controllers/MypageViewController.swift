@@ -4,17 +4,18 @@ import Firebase
 
 class MypageViewController: UIViewController {
     
-    @IBOutlet weak var nameText: UITextField!
-    @IBOutlet weak var mailText: UITextField!
-    @IBOutlet weak var finishCount: UILabel!
-    @IBOutlet weak var total: UILabel!
-    @IBOutlet weak var logout: UIButton!
-    @IBOutlet weak var deleteBtn: UIButton!
+    @IBOutlet private weak var nameText: UITextField!
+    @IBOutlet private weak var mailText: UITextField!
+    @IBOutlet private weak var finishCount: UILabel!
+    @IBOutlet private weak var total: UILabel!
+    @IBOutlet private weak var logout: UIButton!
+    @IBOutlet private weak var deleteBtn: UIButton!
     
     var finishNumber:Int = 0
     var totalNumber:Int = 0
     
-    @IBOutlet weak var scoreView: UIView!
+    @IBOutlet private weak var scoreView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -23,7 +24,7 @@ class MypageViewController: UIViewController {
         mailText.isEnabled = false
     }
     
-    func setup() {
+    private func setup() {
         scoreView.layer.cornerRadius = 10
         scoreView.layer.masksToBounds = false
         
@@ -62,12 +63,12 @@ class MypageViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    func userInfoFromFireStore() {
+    private func userInfoFromFireStore() {
         guard let uid = Auth.auth().currentUser?.uid else { fatalError() }
         
         Firestore.firestore().collection("users").document(uid).getDocument { [self] (snapshot, error) in
@@ -84,7 +85,7 @@ class MypageViewController: UIViewController {
         }
     }
     
-    @IBAction func updateEmailTapped(_ sender: Any) {
+    @IBAction private func updateEmailTapped(_ sender: Any) {
         var alertTextField: UITextField?
         
         let alert = UIAlertController(title: "Change Email",message: "We will send you a link to confirm your new email", preferredStyle: UIAlertController.Style.alert)
@@ -128,7 +129,7 @@ class MypageViewController: UIViewController {
             }
             
         })
-                
+        
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -149,7 +150,7 @@ class MypageViewController: UIViewController {
         }
     }
     
-    @IBAction func deleteBtnTapped(_ sender: UIButton) {
+    @IBAction private func deleteBtnTapped(_ sender: UIButton) {
         
         let alert = UIAlertController(title: "Are you sure ?", message: "You can not cancel if you tap OK.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel",style: UIAlertAction.Style.cancel,handler: nil))

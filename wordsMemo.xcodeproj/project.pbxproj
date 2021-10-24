@@ -113,7 +113,6 @@
 			children = (
 				D8A8D6C326A1D4B40005457E /* AppDelegate.swift */,
 				D8A8D6C526A1D4B40005457E /* SceneDelegate.swift */,
-				D8FDE15327155C0600A73A4E /* UserModel.swift */,
 				D8F98BF826A46E2600907544 /* Model */,
 				D8A8D6E226A1DB990005457E /* Controllers */,
 				D8A8D6E526A2CE570005457E /* View */,
@@ -159,6 +158,7 @@
 				D8A8D6CC26A1D4B40005457E /* wordsMemo.xcdatamodeld */,
 				D84534ED271AAB99004E371A /* NewsModel.swift */,
 				D8B35117271B4B430045DAA7 /* NewsData.swift */,
+				D8FDE15327155C0600A73A4E /* UserModel.swift */,
 				D84534EA271AA533004E371A /* ApiManager.swift */,
 			);
 			path = Model;
@@ -471,7 +471,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.1;
+				CURRENT_PROJECT_VERSION = 1.0.3;
 				DEVELOPMENT_TEAM = 7AAG7H24T5;
 				INFOPLIST_FILE = wordsMemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -479,7 +479,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gmail-mode.sh0k0.c.wordsMemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -495,7 +495,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.1;
+				CURRENT_PROJECT_VERSION = 1.0.3;
 				DEVELOPMENT_TEAM = 7AAG7H24T5;
 				INFOPLIST_FILE = wordsMemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -503,7 +503,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gmail-mode.sh0k0.c.wordsMemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

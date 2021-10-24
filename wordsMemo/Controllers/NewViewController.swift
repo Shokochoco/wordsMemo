@@ -4,21 +4,22 @@ import Firebase
 
 class NewViewController: UIViewController {
 
-    var searchController: UISearchController!
-    @IBOutlet weak var tableView: UITableView!
+    private var searchController: UISearchController!
     
-    var done = UIImage(systemName: "checkmark.circle")!.withRenderingMode(.alwaysTemplate)
-    var donefill = UIImage(systemName: "checkmark.circle.fill")!.withRenderingMode(.alwaysTemplate)
+    @IBOutlet private weak var tableView: UITableView!
+    
+    private var done = UIImage(systemName: "checkmark.circle")?.withRenderingMode(.alwaysTemplate)
+    private var donefill = UIImage(systemName: "checkmark.circle.fill")?.withRenderingMode(.alwaysTemplate)
     var words:[Words] = []
-    var searchResults: [Words] = []
+    private var searchResults: [Words] = []
     var filteredNotCheked = [Words?]()
     var filteredChecked = [Words?]()
     
-    var isSearchBarEmpty: Bool {
+    private var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    var isFiltering: Bool {
+    private var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
     }
     //編集用segueのidentifir
@@ -66,8 +67,8 @@ class NewViewController: UIViewController {
 //        }
 //            gotoSignup()
 //    }
-    
-    func gotoSignup () {
+//
+   private func gotoSignup () {
         let storyboard = UIStoryboard(name: "Signup", bundle: nil)
         let signupViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
         let navigationController = UINavigationController(rootViewController: signupViewController)
@@ -75,7 +76,7 @@ class NewViewController: UIViewController {
         self.present(navigationController, animated: true, completion: nil)
     }
     
-    func filterContentForSearchText(_ searchText: String) {
+    private func filterContentForSearchText(_ searchText: String) {
         searchResults = words.filter { (word: Words) -> Bool in
             return (word.nameFr?.lowercased().contains(searchText.lowercased()))!
         }
@@ -83,7 +84,7 @@ class NewViewController: UIViewController {
         tableView.reloadData()
     }
     
-    func audioSwitch(){
+    private func audioSwitch(){
         
         let switchControl = UISwitch(frame: CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: 50, height: 30)))
         switchControl.isOn = true
@@ -93,7 +94,7 @@ class NewViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: switchControl)
     }
     
-    @objc func switchValueDidChange(sender: UISwitch!) {
+    @objc private func switchValueDidChange(sender: UISwitch!) {
         
         if sender.isOn {
             getData()
@@ -102,8 +103,7 @@ class NewViewController: UIViewController {
         }
     }
     
-    // MARK:  - Segue Navigation　RegisterViewにセルの情報を渡す
-    
+    // MARK:  - Segue Navigation　RegisterViewにセルの情報を渡す    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destinationViewController = segue.destination as? RegisterViewController else { return }
         
@@ -158,7 +158,7 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         filteredNotCheked = words.filter { $0.checked == false }
         filteredChecked = words.filter { $0.checked == true }
         
-        //checkボタンタップ用デリゲート
+        //checkボタンタップ用
         cell.indexPath = indexPath
         cell.delegate = self
         
@@ -170,8 +170,8 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
             word = words[indexPath.row]
         }
         
-        cell.wordEn.text = word.nameEn!
-        cell.wordFr.text = word.nameFr!
+        cell.wordEn.text = word.nameEn
+        cell.wordFr.text = word.nameFr
         cell.genderText.text = word.gender
         
         switch cell.genderText.text {
