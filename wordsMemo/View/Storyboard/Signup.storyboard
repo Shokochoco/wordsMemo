@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gk4-aG-d8S">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -13,11 +13,11 @@
             <objects>
                 <viewController storyboardIdentifier="SignupViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zrb-KT-7As" customClass="SignupViewController" customModule="wordsMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zMS-N8-5EN">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bienvenue !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A0H-5X-Niy">
-                                <rect key="frame" x="102.5" y="138" width="209" height="56"/>
+                                <rect key="frame" x="55.5" y="94" width="209" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="209" id="BLs-Vg-sBa"/>
                                     <constraint firstAttribute="height" constant="56" id="VUk-SC-CB6"/>
@@ -27,7 +27,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="507-az-XMp">
-                                <rect key="frame" x="57" y="668" width="300" height="48"/>
+                                <rect key="frame" x="10" y="372" width="300" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Yso-YR-FkY"/>
                                     <constraint firstAttribute="width" constant="300" id="gYI-GC-qrB"/>
@@ -42,7 +42,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="55k-AU-wN9">
-                                <rect key="frame" x="57" y="761" width="300" height="48"/>
+                                <rect key="frame" x="10" y="455" width="300" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="DIq-bq-qRg"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="Hgd-eT-idK"/>
@@ -59,7 +59,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="AT4-qT-PvH">
-                                <rect key="frame" x="57" y="259" width="300" height="250"/>
+                                <rect key="frame" x="10" y="215" width="300" height="250"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g0q-Eh-RjJ">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="36.5"/>
@@ -82,16 +82,27 @@
                                     <constraint firstAttribute="width" constant="300" id="Vkv-7O-WHl"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhg-Kn-NY8">
+                                <rect key="frame" x="114" y="523" width="92" height="30"/>
+                                <state key="normal" title="Register later">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="RegisterLaterTapped:" destination="Zrb-KT-7As" eventType="touchUpInside" id="HWq-Q9-W63"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9O6-8u-MrT"/>
                         <color key="backgroundColor" red="0.027000000699999999" green="0.60000002379999995" blue="0.57300001379999999" alpha="0.84700000289999999" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="55k-AU-wN9" firstAttribute="centerX" secondItem="zMS-N8-5EN" secondAttribute="centerX" id="39F-6t-rlX"/>
-                            <constraint firstItem="55k-AU-wN9" firstAttribute="top" secondItem="507-az-XMp" secondAttribute="bottom" constant="45" id="7iB-wg-7E1"/>
+                            <constraint firstItem="55k-AU-wN9" firstAttribute="top" secondItem="507-az-XMp" secondAttribute="bottom" constant="35" id="7iB-wg-7E1"/>
                             <constraint firstItem="AT4-qT-PvH" firstAttribute="centerX" secondItem="zMS-N8-5EN" secondAttribute="centerX" id="8XF-VG-DHz"/>
                             <constraint firstItem="A0H-5X-Niy" firstAttribute="top" secondItem="9O6-8u-MrT" secondAttribute="top" constant="50" id="BQf-3P-kW7"/>
+                            <constraint firstItem="9O6-8u-MrT" firstAttribute="bottom" secondItem="dhg-Kn-NY8" secondAttribute="bottom" constant="15" id="P0p-0h-2cH"/>
                             <constraint firstItem="AT4-qT-PvH" firstAttribute="top" secondItem="A0H-5X-Niy" secondAttribute="bottom" priority="750" constant="65" id="Pm3-jR-brg"/>
-                            <constraint firstItem="9O6-8u-MrT" firstAttribute="bottom" secondItem="55k-AU-wN9" secondAttribute="bottom" constant="53" id="WMB-Ef-OGS"/>
+                            <constraint firstItem="9O6-8u-MrT" firstAttribute="bottom" secondItem="55k-AU-wN9" secondAttribute="bottom" constant="65" id="WMB-Ef-OGS"/>
+                            <constraint firstItem="dhg-Kn-NY8" firstAttribute="centerX" secondItem="zMS-N8-5EN" secondAttribute="centerX" id="b6R-AQ-cjU"/>
                             <constraint firstItem="507-az-XMp" firstAttribute="centerX" secondItem="zMS-N8-5EN" secondAttribute="centerX" id="jfy-Nj-NHX"/>
                             <constraint firstItem="A0H-5X-Niy" firstAttribute="centerX" secondItem="zMS-N8-5EN" secondAttribute="centerX" id="m5U-Q8-RQ8"/>
                         </constraints>
@@ -115,7 +126,7 @@
                 <navigationController storyboardIdentifier="NavigationStart" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gk4-aG-d8S" customClass="NavigationOrientationController" customModule="wordsMemo" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Sw1-ju-LhN">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

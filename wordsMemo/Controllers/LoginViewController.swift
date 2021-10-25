@@ -106,7 +106,7 @@ class LoginViewController: UIViewController {
                 guard let email = alertTextField?.text else { return }
                 Auth.auth().sendPasswordReset(withEmail: email) { error in
                     if let error = error {
-                        let failedlog = UIAlertController(title: "Failed", message: "Please make sure your email adress", preferredStyle: .alert)
+                        let failedlog = UIAlertController(title: "Failed", message: error.localizedDescription, preferredStyle: .alert)
                         failedlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(failedlog, animated: true, completion: nil)
                     } else {

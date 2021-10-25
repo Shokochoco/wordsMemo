@@ -109,6 +109,9 @@ class SignupViewController:UIViewController {
         navigationController?.pushViewController(loginViewController, animated: true)
     }
 
+    @IBAction func RegisterLaterTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension UITextField {

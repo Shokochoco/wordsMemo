@@ -3,6 +3,7 @@ import UIKit
 import MBCircularProgressBar
 import Charts
 import CoreData
+import Firebase
 
 class StatisticsViewController: UIViewController {
     
@@ -37,19 +38,59 @@ class StatisticsViewController: UIViewController {
         
     }
     
+    //感知　書く必要ある？
+//    override func viewDidAppear(_ animated: Bool) {
+//           confirmRegister()
+//        }
+//
+//        func confirmRegister() {
+//            if Auth.auth().currentUser?.uid != nil {
+//                //Login画面に遷移
+//                let storyboard = UIStoryboard(name: "Login", bundle: nil)
+//                let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+//                navigationController?.pushViewController(loginViewController, animated: true)
+//            }
+//            return
+//        }
+
+    
     @objc func myButtonPressed(_ sender: UIBarButtonItem) {
-        let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
-        let newvc = newController.viewControllers[0] as! NewViewController
+        //ログインしてるかを検知する
+        if Auth.auth().currentUser?.uid != nil {
+            
+            let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
+                    let newvc = newController.viewControllers[0] as! NewViewController
+            
+                    let checkedCount = newvc.filteredChecked.count
+                    let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
+            
+            let storyboard = UIStoryboard(name: "Mypage", bundle: nil)
+            let mypageViewController = storyboard.instantiateViewController(withIdentifier: "mypage") as! MypageViewController
+            mypageViewController.finishNumber = checkedCount
+            mypageViewController.totalNumber = totalCount
+            mypageViewController.modalPresentationStyle = .fullScreen
+            self.present(mypageViewController, animated: true, completion: nil)
+            
+        } else {
         
-        let checkedCount = newvc.filteredChecked.count
-        let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
+        let storyboard = UIStoryboard(name: "Signup", bundle: nil)
+        let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
+        navigationStart.modalPresentationStyle = .fullScreen
+        self.present(navigationStart, animated: true, completion: nil)
+        }
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mypageViewController = storyboard.instantiateViewController(withIdentifier: "mypage") as! MypageViewController
-        mypageViewController.finishNumber = checkedCount
-        mypageViewController.totalNumber = totalCount
-        mypageViewController.modalPresentationStyle = .fullScreen
-        self.present(mypageViewController, animated: true, completion: nil)
+//        let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
+//        let newvc = newController.viewControllers[0] as! NewViewController
+//
+//        let checkedCount = newvc.filteredChecked.count
+//        let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
+//
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let mypageViewController = storyboard.instantiateViewController(withIdentifier: "mypage") as! MypageViewController
+//        mypageViewController.finishNumber = checkedCount
+//        mypageViewController.totalNumber = totalCount
+//        mypageViewController.modalPresentationStyle = .fullScreen
+//        self.present(mypageViewController, animated: true, completion: nil)
     }
     
     //回転をするたびにcircleグラフを再度表示

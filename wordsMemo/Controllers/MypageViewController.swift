@@ -54,7 +54,7 @@ class MypageViewController: UIViewController {
         AppUtility.lockOrientation(.portrait)
         
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         AppUtility.lockOrientation(.all)
     }
@@ -100,7 +100,7 @@ class MypageViewController: UIViewController {
             Auth.auth().currentUser?.updateEmail(to: email) { error in
                 if let error = error {
                     print("update失敗")
-                    let failedlog = UIAlertController(title: "Failed", message: "Please make sure your email adress", preferredStyle: .alert)
+                    let failedlog = UIAlertController(title: "Failed", message: error.localizedDescription, preferredStyle: .alert)
                     failedlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(failedlog, animated: true, completion: nil)
                 } else {
@@ -119,7 +119,7 @@ class MypageViewController: UIViewController {
                                 }
                             }
                             print("sendメッセージ成功")
-                            let successlog = UIAlertController(title: "Succeed", message: "Check your email box.", preferredStyle: .alert)
+                            let successlog = UIAlertController(title: "Succeed", message: "Check your email box. Please Log out and Sign up again", preferredStyle: .alert)
                             //closureでOK押したら最初の画面に戻った方がいい？
                             successlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                             self.present(successlog, animated: true, completion: nil)
@@ -140,10 +140,7 @@ class MypageViewController: UIViewController {
     @IBAction func logoutTapped(_ sender: Any) {
         do {
             try Auth.auth().signOut()
-            let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-            let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
-            navigationStart.modalPresentationStyle = .fullScreen
-            self.present(navigationStart, animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         } catch {
             let failedlog = UIAlertController(title: "Log Out Failed", message: " ", preferredStyle: .alert)
             failedlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -164,10 +161,11 @@ class MypageViewController: UIViewController {
                     let failedAccount = UIAlertController(title: "Delete your account Failed", message: " ", preferredStyle: .alert)
                     failedAccount.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 } else {
-                    let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-                    let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
-                    navigationStart.modalPresentationStyle = .fullScreen
-                    self.present(navigationStart, animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
+//                    let storyboard = UIStoryboard(name: "Signup", bundle: nil)
+//                    let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
+//                    navigationStart.modalPresentationStyle = .fullScreen
+//                    self.present(navigationStart, animated: true, completion: nil)
                 }
             }
         })

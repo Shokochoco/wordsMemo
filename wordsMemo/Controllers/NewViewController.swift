@@ -30,7 +30,6 @@ class NewViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         audioSwitch()
         setup()
-        gotoSignup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,26 +54,14 @@ class NewViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = true
         
     }
-//    //感知　書く必要ある？
-//    override func viewDidAppear(_ animated: Bool) {
-//       confirmRegister()
+
+//     func gotoSignup () {
+//        let storyboard = UIStoryboard(name: "Signup", bundle: nil)
+//        let signupViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
+//        let navigationController = UINavigationController(rootViewController: signupViewController)
+//        navigationController.modalPresentationStyle = .fullScreen
+//        self.present(navigationController, animated: true, completion: nil)
 //    }
-//
-//    func confirmRegister() {
-//        if Auth.auth().currentUser?.uid != nil {
-//            //Login画面に遷移
-//
-//        }
-//            gotoSignup()
-//    }
-//
-   private func gotoSignup () {
-        let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-        let signupViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
-        let navigationController = UINavigationController(rootViewController: signupViewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        self.present(navigationController, animated: true, completion: nil)
-    }
     
     private func filterContentForSearchText(_ searchText: String) {
         searchResults = words.filter { (word: Words) -> Bool in
