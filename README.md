@@ -1,8 +1,7 @@
 # wordsMemo
 
-![6 5インチ iPhone 11](https://user-images.githubusercontent.com/85513047/132508443-94e81908-8ca7-4d8e-9acf-66ecc9b20381.png)
-![6 5インチ iPhone 11 (2)](https://user-images.githubusercontent.com/85513047/132508420-5644ce88-beaf-42de-989c-a27335b66f7b.png)
-
+![6 5インチ iPhone 11](https://user-images.githubusercontent.com/85513047/138691765-2c1a6bbd-17a1-421f-b342-2c1bad621b09.png)
+![6 5インチ iPhone 11 (2)](https://user-images.githubusercontent.com/85513047/138691749-fcf86912-870a-4de5-a838-80445673b619.png)
 
 🇯🇵
 ## 概要
