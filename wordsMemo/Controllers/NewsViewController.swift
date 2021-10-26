@@ -4,10 +4,10 @@ import SafariServices
 
 class NewsViewController: UIViewController {
     
-    @IBOutlet weak var collectionview: UICollectionView!
-    var apiManager = ApiManager()
-    var newsInfos = [NewsModel?]()
-    var indicator = UIActivityIndicatorView()
+    @IBOutlet private weak var collectionview: UICollectionView!
+    private var apiManager = ApiManager()
+    private var newsInfos = [NewsModel?]()
+    private var indicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +30,13 @@ class NewsViewController: UIViewController {
         start()
     }
     
-    func indicatorSetup() {
+    private func indicatorSetup() {
         indicator.center = view.center
         indicator.style = UIActivityIndicatorView.Style.large
         indicator.color = #colorLiteral(red: 0, green: 0.6113008261, blue: 0.5758315325, alpha: 0.8470000029)
         view.addSubview(indicator)
     }
-    func start() {
+    private func start() {
         DispatchQueue.main.async {
             self.indicator.startAnimating()
         }
@@ -52,7 +52,7 @@ extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionview.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! NewsCollectionViewCell
-        
+        //違うところに書きたい
         cell.layer.cornerRadius = 15
         cell.layer.shadowOpacity = 0.4
         cell.layer.shadowRadius = 12
@@ -95,7 +95,7 @@ extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
     }
     
-    func darken(image:UIImage, level:CGFloat) -> UIImage{
+    private func darken(image:UIImage, level:CGFloat) -> UIImage{
         // 一時的な暗くするようの黒レイヤ
         let frame = CGRect(origin:CGPoint(x:0,y:0),size:image.size)
         let tempView = UIView(frame:frame)
@@ -121,7 +121,7 @@ extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSour
 }
 
 extension NewsViewController: apiDelegate {
-    
+    //要らない気がする
     func jsonData(_ newsInfo: NewsData) {
         newsInfos.removeAll()
         

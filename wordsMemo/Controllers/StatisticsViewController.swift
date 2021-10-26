@@ -7,11 +7,11 @@ import Firebase
 
 class StatisticsViewController: UIViewController {
     
-    @IBOutlet weak var progressCircle: MBCircularProgressBarView!
+    @IBOutlet private weak var progressCircle: MBCircularProgressBarView!
     @IBOutlet weak var chart: BarChartView!
     
-    var myButtonItem: UIBarButtonItem!
-    var dayChecekdMarkCounts = [Double]()
+    private var myButtonItem: UIBarButtonItem!
+    private var dayChecekdMarkCounts = [Double]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,22 +38,6 @@ class StatisticsViewController: UIViewController {
         
     }
     
-    //感知　書く必要ある？
-//    override func viewDidAppear(_ animated: Bool) {
-//           confirmRegister()
-//        }
-//
-//        func confirmRegister() {
-//            if Auth.auth().currentUser?.uid != nil {
-//                //Login画面に遷移
-//                let storyboard = UIStoryboard(name: "Login", bundle: nil)
-//                let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-//                navigationController?.pushViewController(loginViewController, animated: true)
-//            }
-//            return
-//        }
-
-    
     @objc func myButtonPressed(_ sender: UIBarButtonItem) {
         //ログインしてるかを検知する
         if Auth.auth().currentUser?.uid != nil {
@@ -78,19 +62,7 @@ class StatisticsViewController: UIViewController {
         navigationStart.modalPresentationStyle = .fullScreen
         self.present(navigationStart, animated: true, completion: nil)
         }
-        
-//        let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
-//        let newvc = newController.viewControllers[0] as! NewViewController
-//
-//        let checkedCount = newvc.filteredChecked.count
-//        let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
-//
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let mypageViewController = storyboard.instantiateViewController(withIdentifier: "mypage") as! MypageViewController
-//        mypageViewController.finishNumber = checkedCount
-//        mypageViewController.totalNumber = totalCount
-//        mypageViewController.modalPresentationStyle = .fullScreen
-//        self.present(mypageViewController, animated: true, completion: nil)
+
     }
     
     //回転をするたびにcircleグラフを再度表示
@@ -98,7 +70,7 @@ class StatisticsViewController: UIViewController {
         circle()
     }
     
-    func circle() {
+    private func circle() {
 
         let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
         let newvc = newController.viewControllers[0] as! NewViewController
@@ -110,7 +82,7 @@ class StatisticsViewController: UIViewController {
         
     }
     
-    func getDataPoints(accuracy: [BarChartDataEntry]) -> [BarChartDataEntry] {
+    private func getDataPoints(accuracy: [BarChartDataEntry]) -> [BarChartDataEntry] {
         var dataPoints: [BarChartDataEntry] = []
         
         for count in (0..<accuracy.count) {
@@ -119,7 +91,7 @@ class StatisticsViewController: UIViewController {
         return dataPoints
     }
     
-    func setData() {
+    private func setData() {
         
         chart.noDataText = "No Data available for Chart"
         
@@ -182,7 +154,7 @@ class StatisticsViewController: UIViewController {
     }
     
     
-    func setupChart() {
+    private func setupChart() {
         
         //X軸設定
         let dateFormatter = DateFormatter()

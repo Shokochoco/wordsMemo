@@ -54,14 +54,6 @@ class NewViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = true
         
     }
-
-//     func gotoSignup () {
-//        let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-//        let signupViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
-//        let navigationController = UINavigationController(rootViewController: signupViewController)
-//        navigationController.modalPresentationStyle = .fullScreen
-//        self.present(navigationController, animated: true, completion: nil)
-//    }
     
     private func filterContentForSearchText(_ searchText: String) {
         searchResults = words.filter { (word: Words) -> Bool in

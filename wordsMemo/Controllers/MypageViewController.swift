@@ -133,11 +133,11 @@ class MypageViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func backTapped(_ sender: Any) {
+    @IBAction private func backTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func logoutTapped(_ sender: Any) {
+    @IBAction private func logoutTapped(_ sender: Any) {
         do {
             try Auth.auth().signOut()
             self.dismiss(animated: true, completion: nil)
@@ -162,10 +162,6 @@ class MypageViewController: UIViewController {
                     failedAccount.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 } else {
                     self.dismiss(animated: true, completion: nil)
-//                    let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-//                    let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
-//                    navigationStart.modalPresentationStyle = .fullScreen
-//                    self.present(navigationStart, animated: true, completion: nil)
                 }
             }
         })

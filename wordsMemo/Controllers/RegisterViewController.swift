@@ -3,14 +3,14 @@ import CoreData
 
 class RegisterViewController: UIViewController {
     
-    @IBOutlet weak var enText: UITextField!
-    @IBOutlet weak var frText: UITextField!
-    @IBOutlet weak var genderSwitch: UISegmentedControl!
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var registerButton: UIButton!
-    var words: Words? 
-    var genderCategory = "Homme"
-    var checkedCheck = false
+    @IBOutlet private weak var enText: UITextField!
+    @IBOutlet private weak var frText: UITextField!
+    @IBOutlet private weak var genderSwitch: UISegmentedControl!
+    @IBOutlet private weak var textView: UITextView!
+    @IBOutlet private weak var registerButton: UIButton!
+    var words: Words?
+    private var genderCategory = "Homme"
+    private var checkedCheck = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,7 @@ class RegisterViewController: UIViewController {
     }
     // MARK: - Gender Switch
     
-    @IBAction func genderChanged(_ sender: UISegmentedControl) {
+    @IBAction private func genderChanged(_ sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
         case 0:
@@ -82,7 +82,7 @@ class RegisterViewController: UIViewController {
     }    
     // MARK: - Register Button　新規登録時・編集時
     
-    @IBAction func registerButton(_ sender: UIButton) {
+    @IBAction private func registerButton(_ sender: UIButton) {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let wordEnName = enText.text

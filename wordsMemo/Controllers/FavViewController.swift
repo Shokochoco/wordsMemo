@@ -4,9 +4,9 @@ import CoreData
 
 class FavViewController: UIViewController, UISearchResultsUpdating {
     
-    var searchController: UISearchController!
-    var done = UIImage(systemName: "checkmark.circle")!.withRenderingMode(.alwaysTemplate)
-    var donefill = UIImage(systemName: "checkmark.circle.fill")!.withRenderingMode(.alwaysTemplate)
+    private var searchController: UISearchController!
+    private var done = UIImage(systemName: "checkmark.circle")!.withRenderingMode(.alwaysTemplate)
+    private var donefill = UIImage(systemName: "checkmark.circle.fill")!.withRenderingMode(.alwaysTemplate)
     var favorites: [Words] = []
     var searchResults: [Words] = []
     
@@ -81,8 +81,8 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
             favorite = favorites[indexPath.row]
         }
         
-        cell.wordEn.text = favorite.nameEn!
-        cell.wordFr.text = favorite.nameFr!
+        cell.wordEn.text = favorite.nameEn
+        cell.wordFr.text = favorite.nameFr
         cell.genderText.text = favorite.gender
         
         switch cell.genderText.text {
@@ -125,7 +125,7 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Save and Get data
     
-    func getData() {
+    private func getData() {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Words")
         fetchRequest.predicate = NSPredicate(format: "checked == true")
