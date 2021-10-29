@@ -5,5 +5,5 @@ class NewsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var publishedTitle: UILabel!
-//prepare
+//prepareなんとか使うといいかも
 }

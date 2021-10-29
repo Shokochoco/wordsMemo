@@ -115,9 +115,7 @@ class NewViewController: UIViewController {
     }
     
 }
-
 // MARK: - TableView Datasorse Methods
-
 extension NewViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
@@ -170,9 +168,7 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
-    
     // MARK: - Save and Get data
-    
     func getDataNotyet() {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Words")
@@ -217,9 +213,7 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         
         tableView.reloadData()
     }
-    
     // MARK: - SwipeAction(delete)
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -235,9 +229,7 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
         return UISwipeActionsConfiguration(actions:[deleteAction])
     }
 }
-
 // MARK: - UISearchResultsUpdating 検索した時の画面の動き
-
 extension NewViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {

@@ -66,7 +66,6 @@ class RegisterViewController: UIViewController {
         self.navigationController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     // MARK: - Gender Switch
-    
     @IBAction private func genderChanged(_ sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
@@ -80,8 +79,7 @@ class RegisterViewController: UIViewController {
             print("反応しない")
         }
     }    
-    // MARK: - Register Button　新規登録時・編集時
-    
+    // MARK: - Register Button　 
     @IBAction private func registerButton(_ sender: UIButton) {
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext

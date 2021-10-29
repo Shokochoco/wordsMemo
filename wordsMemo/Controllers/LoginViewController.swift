@@ -79,8 +79,8 @@ class LoginViewController: UIViewController {
     
     private func userInfoFromFireStore() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        Firestore.firestore().collection("users").document(uid).getDocument { [weak self] (snapshot, error) in
+        let userInfo = Firestore.firestore().collection("users").document(uid)
+        userInfo.getDocument { [weak self] (snapshot, error) in
             if let error = error {
                 print("FireStoreから取得失敗", error)
                 return
@@ -118,6 +118,5 @@ class LoginViewController: UIViewController {
             })
         self.present(alert, animated: true, completion: nil)
         }
-    
 }
 

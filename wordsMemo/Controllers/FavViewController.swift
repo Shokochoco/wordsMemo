@@ -103,9 +103,7 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
         
     }
-    
     // MARK: - SwipeAction
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
@@ -122,9 +120,7 @@ extension FavViewController: UITableViewDelegate, UITableViewDataSource {
         
         return UISwipeActionsConfiguration(actions:[deleteAction])
     }
-    
-    // MARK: - Save and Get data
-    
+    // MARK: - Save and Get data    
     private func getData() {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Words")

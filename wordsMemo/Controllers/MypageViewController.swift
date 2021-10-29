@@ -54,7 +54,7 @@ class MypageViewController: UIViewController {
         AppUtility.lockOrientation(.portrait)
         
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         AppUtility.lockOrientation(.all)
     }
@@ -70,8 +70,8 @@ class MypageViewController: UIViewController {
     
     private func userInfoFromFireStore() {
         guard let uid = Auth.auth().currentUser?.uid else { fatalError() }
-        
-        Firestore.firestore().collection("users").document(uid).getDocument { [self] (snapshot, error) in
+        let userInfo = Firestore.firestore().collection("users").document(uid)
+        userInfo.getDocument { [self] (snapshot, error) in
             if let error = error {
                 print("FireStoreから取得失敗", error)
                 return
@@ -84,7 +84,7 @@ class MypageViewController: UIViewController {
             }
         }
     }
-    
+ // MARK: - Button Tapped
     @IBAction private func updateEmailTapped(_ sender: Any) {
         var alertTextField: UITextField?
         
@@ -97,33 +97,31 @@ class MypageViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancel",style: UIAlertAction.Style.cancel,handler: nil))
         alert.addAction( UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { _ in
             guard let email = alertTextField?.text else { return }
-            Auth.auth().currentUser?.updateEmail(to: email) { error in
+            let user = Auth.auth().currentUser
+            user?.updateEmail(to: email) { error in
                 if let error = error {
-                    print("update失敗")
                     let failedlog = UIAlertController(title: "Failed", message: error.localizedDescription, preferredStyle: .alert)
                     failedlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(failedlog, animated: true, completion: nil)
                 } else {
-                    Auth.auth().currentUser?.sendEmailVerification { error in
+                    user?.sendEmailVerification { error in
                         if let error = error {
                             print("sendメッセージ失敗")
                         } else {
                             guard let uid = Auth.auth().currentUser?.uid else { fatalError() }
-                            Firestore.firestore().collection("users").document(uid).updateData([
-                                "email": email
-                            ]) { err in
-                                if let err = err {
-                                    print("Error updating document: \(err)")
+                            let userInfo = Firestore.firestore().collection("users").document(uid)
+                            userInfo.updateData([ "email": email ]) { err in
+                                if let error = error {
+                                    print("Error updating document: \(error)")
                                 } else {
                                     print("Document successfully updated")
                                 }
                             }
-                            print("sendメッセージ成功")
                             let successlog = UIAlertController(title: "Succeed", message: "Check your email box. Please Log out and Sign up again", preferredStyle: .alert)
                             //closureでOK押したら最初の画面に戻った方がいい？
                             successlog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                             self.present(successlog, animated: true, completion: nil)
-                        }
+                       }
                     }
                 }
             }
@@ -154,10 +152,8 @@ class MypageViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
             
             let user = Auth.auth().currentUser
-            
             user?.delete { error in
                 if let error = error {
-                    print("アカウント削除できませんでした\(error)")
                     let failedAccount = UIAlertController(title: "Delete your account Failed", message: " ", preferredStyle: .alert)
                     failedAccount.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 } else {
@@ -175,9 +171,8 @@ extension MypageViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         
         guard let uid = Auth.auth().currentUser?.uid else { fatalError() }
-        let ref = Firestore.firestore().collection("users").document(uid)
-        print("ok")
-        ref.updateData([
+        let userInfo = Firestore.firestore().collection("users").document(uid)
+        userInfo.updateData([
             "name": nameText.text ?? ""
         ]) { err in
             if let err = err {

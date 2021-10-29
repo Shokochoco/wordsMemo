@@ -15,7 +15,7 @@ class NewsViewController: UIViewController {
         navigationItem.title = "Actualités"
         navigationController?.navigationBar.titleTextAttributes
             = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 25)!]
-        apiManager.delegate = self //上に書く
+        apiManager.delegate = self //上の方に書く
         apiManager.performRequest()
         collectionview.delegate = self
         collectionview.dataSource = self
@@ -43,7 +43,7 @@ class NewsViewController: UIViewController {
     }
     
 }
-
+// MARK: - CollectionView
 extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -96,7 +96,7 @@ extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     private func darken(image:UIImage, level:CGFloat) -> UIImage{
-        // 一時的な暗くするようの黒レイヤ
+        // 暗くするようの黒レイヤ
         let frame = CGRect(origin:CGPoint(x:0,y:0),size:image.size)
         let tempView = UIView(frame:frame)
         tempView.backgroundColor = UIColor.black
@@ -119,7 +119,7 @@ extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
         
 }
-
+// MARK: - API
 extension NewsViewController: apiDelegate {
     //要らない気がする
     func jsonData(_ newsInfo: NewsData) {

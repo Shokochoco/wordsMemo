@@ -43,10 +43,10 @@ class StatisticsViewController: UIViewController {
         if Auth.auth().currentUser?.uid != nil {
             
             let newController = self.tabBarController?.viewControllers?[0] as! UINavigationController
-                    let newvc = newController.viewControllers[0] as! NewViewController
+            let newvc = newController.viewControllers[0] as! NewViewController
             
-                    let checkedCount = newvc.filteredChecked.count
-                    let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
+            let checkedCount = newvc.filteredChecked.count
+            let totalCount = Int(checkedCount)+Int(newvc.filteredNotCheked.count)
             
             let storyboard = UIStoryboard(name: "Mypage", bundle: nil)
             let mypageViewController = storyboard.instantiateViewController(withIdentifier: "mypage") as! MypageViewController
@@ -57,14 +57,13 @@ class StatisticsViewController: UIViewController {
             
         } else {
         
-        let storyboard = UIStoryboard(name: "Signup", bundle: nil)
-        let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
-        navigationStart.modalPresentationStyle = .fullScreen
-        self.present(navigationStart, animated: true, completion: nil)
+            let storyboard = UIStoryboard(name: "Signup", bundle: nil)
+            let navigationStart = storyboard.instantiateViewController(withIdentifier: "NavigationStart") as! UINavigationController
+            navigationStart.modalPresentationStyle = .fullScreen
+            self.present(navigationStart, animated: true, completion: nil)
         }
 
-    }
-    
+    }    
     //回転をするたびにcircleグラフを再度表示
     @objc func orientationChange() {
         circle()
@@ -93,8 +92,7 @@ class StatisticsViewController: UIViewController {
     
     private func setData() {
         
-        chart.noDataText = "No Data available for Chart"
-        
+        chart.noDataText = "No Data available for Chart"        
         //yAxisのデータ
         func readData(date:Date){
             
@@ -109,7 +107,6 @@ class StatisticsViewController: UIViewController {
                 component.minute = 0
                 component.second = 0
                 let start:NSDate = NSCalendar.current.date(from:component)! as NSDate
-                
                 //XX月XX日23時59分59秒に設定したものをendにいれる
                 component.hour = 23
                 component.minute = 59
@@ -152,10 +149,8 @@ class StatisticsViewController: UIViewController {
         let data = BarChartData(dataSet: dataSet)
         chart.data = data
     }
-    
-    
-    private func setupChart() {
         
+    private func setupChart() {
         //X軸設定
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "M/d"
@@ -178,7 +173,6 @@ class StatisticsViewController: UIViewController {
         chart.xAxis.labelPosition = .bottom //x軸ラベル下側に表示
         chart.xAxis.labelFont = UIFont.systemFont(ofSize: 15) //x軸のフォントの大きさ
         chart.xAxis.drawGridLinesEnabled = false
-        
         //y軸設定
         chart.rightAxis.enabled = false
         chart.leftAxis.enabled = true
@@ -190,7 +184,6 @@ class StatisticsViewController: UIViewController {
         chart.leftAxis.labelTextColor = .systemGray// ラベルの色を設定
         chart.leftAxis.gridColor = .systemGray// グリッドの色を設定
         chart.leftAxis.drawAxisLineEnabled = false// y左軸線の表示
-        
         //その他
         chart.legend.enabled = false //"■ months"のlegendの表示
         chart.animate(yAxisDuration: 1.5)
@@ -208,9 +201,7 @@ class StatisticsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
 }
-
 //x軸のラベル設定
 class DateValueFormatter: NSObject, IAxisValueFormatter {
     
@@ -226,7 +217,6 @@ class DateValueFormatter: NSObject, IAxisValueFormatter {
     }    
     
 }
-
 //小数点表示を整数表示にする処理。バーの上部に表示される数字。
 class BarChartValueFormatter: NSObject, IValueFormatter{
     public func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String{

@@ -92,6 +92,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D828278E272C0B9B004036BD /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				D8A8D6E726A4115F0005457E /* WordTableViewCell.swift */,
+				D84534E027197BD3004E371A /* NewsCollectionViewCell.swift */,
+				D84534E127197BD3004E371A /* NewsCollectionViewCell.xib */,
+			);
+			path = xib;
+			sourceTree = "<group>";
+		};
 		D8A8D6B726A1D4B40005457E = {
 			isa = PBXGroup;
 			children = (
@@ -146,9 +156,7 @@
 		D8A8D6E526A2CE570005457E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D8A8D6E726A4115F0005457E /* WordTableViewCell.swift */,
-				D84534E027197BD3004E371A /* NewsCollectionViewCell.swift */,
-				D84534E127197BD3004E371A /* NewsCollectionViewCell.xib */,
+				D828278E272C0B9B004036BD /* xib */,
 				D8FDE15127155A7800A73A4E /* Storyboard */,
 			);
 			path = View;
