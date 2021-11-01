@@ -97,10 +97,9 @@ class NewViewController: UIViewController {
                 word = words[indexPath.row]
             }
             // 編集したいデータを取得
-            guard let editedWordEn = word.nameEn else { return }
-            guard let editedWordFr = word.nameFr else { return }
-            guard let editedGender = word.gender else { return }
-            
+            guard let editedWordEn = word.nameEn,
+                  let editedWordFr = word.nameFr,
+                  let editedGender = word.gender else { return }
             // 先ほど取得したnameとgenderに合致するデータのみをfetchするようにfetchRequestを作成
             let fetchRequest: NSFetchRequest<Words> = Words.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "nameEn = %@ and nameFr = %@ and gender = %@ ", editedWordEn, editedWordFr, editedGender)
@@ -130,15 +129,12 @@ extension NewViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordTableViewCell", for: indexPath)as! WordTableViewCell
-        
         //統計計算用
         filteredNotCheked = words.filter { $0.checked == false }
         filteredChecked = words.filter { $0.checked == true }
-        
         //checkボタンタップ用
         cell.indexPath = indexPath
         cell.delegate = self
-        
         //検索した時
         var word: Words
         if isFiltering {

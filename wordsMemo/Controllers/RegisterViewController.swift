@@ -101,7 +101,7 @@ class RegisterViewController: UIViewController {
             if words == nil {
                 words = Words(context: context) //contextの中に新規wordsを作る
             }
-            // 受け取ったオブジェクト（編集時）、または、先ほど新しく作成したオブジェクト（新規時）どちらもwordsにしてあるので、CoreDataに代入する
+            //受け取ったオブジェクト（編集時）、または、先ほど新しく作成したオブジェクト（新規時）どちらもwordsにしてあるので、CoreDataに代入する
             if let words = words {
                 words.nameEn = wordEnName
                 words.nameFr = wordFrName

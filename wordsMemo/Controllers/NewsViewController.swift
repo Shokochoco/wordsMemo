@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import SafariServices
+import Kingfisher
 
 class NewsViewController: UIViewController {
     
@@ -52,36 +53,31 @@ extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionview.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! NewsCollectionViewCell
-        //違うところに書きたい
-        cell.layer.cornerRadius = 15
-        cell.layer.shadowOpacity = 0.4
-        cell.layer.shadowRadius = 12
-        cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOffset = CGSize(width: 8, height: 8)
         
+        cell.setup()
         cell.sourceLabel.text = newsInfos[indexPath.row]?.publisher
         cell.titleLabel.text = newsInfos[indexPath.row]?.titleName
         cell.publishedTitle.text = newsInfos[indexPath.row]?.publishAt
+        
         if let url = URL(string: newsInfos[indexPath.row]?.photoUrl ?? "") {
-            do {
-                let data = try Data(contentsOf: url)
-                if let backImage = UIImage(data: data) {
-                   let effect = darken(image: backImage, level: 0.5)
-                   cell.imageView.image = effect
+            cell.imageView.kf.setImage(with: url) { result in
+                switch result {
+                case .success(let value):
+                    let effect = self.darken(image: value.image, level: 0.5)
+                    cell.imageView.image = effect
+                    cell.imageView.contentMode = .scaleAspectFill
+                case .failure(let error):
+                    cell.backgroundColor = #colorLiteral(red: 0, green: 0.6113008261, blue: 0.5758315325, alpha: 0.8470000029)
+                    print("Error : \(error.localizedDescription)")
                 }
-
-                cell.imageView!.contentMode = .scaleAspectFill
-            } catch let err {
-                cell.backgroundColor = #colorLiteral(red: 0, green: 0.6113008261, blue: 0.5758315325, alpha: 0.8470000029)
-                print("Error : \(err.localizedDescription)")
             }
         }
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellSize = CGSize(width: Util.returnDisplaySize().width - 20, height: 150)
+        let displaySize = UIScreen.main.bounds.size
+        let cellSize = CGSize(width: displaySize.width - 20, height: 150)
         return cellSize
     }
     
@@ -140,14 +136,5 @@ extension NewsViewController: apiDelegate {
             self.indicator.stopAnimating()
             self.collectionview.reloadData()
         }
-    }
-}
-
-class Util: NSObject {
-    
-    class func returnDisplaySize() -> CGSize {
-        let displaySize = UIScreen.main.bounds.size
-        
-        return displaySize
     }
 }

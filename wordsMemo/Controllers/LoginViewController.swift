@@ -8,7 +8,7 @@ class LoginViewController: UIViewController {
     @IBOutlet private weak var loginBtn: UIButton!
     @IBOutlet private weak var signupBtn: UIButton!
     
-    private var indicator = UIActivityIndicatorView()
+    private let indicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +56,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction private func loginTapped(_ sender: UIButton) {
-        guard let email = mailText.text else { return }
-        guard let pass = passText.text else { return }
+        guard let email = mailText.text,
+              let pass = passText.text else { return }
         
         Auth.auth().signIn(withEmail: email, password: pass) { (result, error) in
             if let error = error {
@@ -79,6 +79,7 @@ class LoginViewController: UIViewController {
     
     private func userInfoFromFireStore() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        
         let userInfo = Firestore.firestore().collection("users").document(uid)
         userInfo.getDocument { [weak self] (snapshot, error) in
             if let error = error {

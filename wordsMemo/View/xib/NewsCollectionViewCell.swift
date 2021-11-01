@@ -5,5 +5,12 @@ class NewsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var publishedTitle: UILabel!
-//prepareなんとか使うといいかも
+
+    func setup() {
+        self.layer.cornerRadius = 15
+        self.layer.shadowOpacity = 0.4
+        self.layer.shadowRadius = 12
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 8, height: 8)
+    }
 }
