@@ -8,7 +8,7 @@ class NewsViewController: UIViewController {
     @IBOutlet private weak var collectionview: UICollectionView!
     private var apiManager = ApiManager()
     private var newsInfos = [NewsModel?]()
-    private var indicator = UIActivityIndicatorView()
+    private let indicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()

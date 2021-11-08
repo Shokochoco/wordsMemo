@@ -15,5 +15,6 @@ pod 'Firebase/Auth'
 pod 'Firebase/Firestore'
 pod 'IQKeyboardManagerSwift'
 pod 'Kingfisher'
+pod 'APIKit', '~> 5.0'
 
 end
