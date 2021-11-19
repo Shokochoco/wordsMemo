@@ -15,7 +15,7 @@ class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        AppUtility.lockOrientation(.all)
         setupChart()
         setData()
         
@@ -24,20 +24,17 @@ class StatisticsViewController: UIViewController {
         myButtonItem.tintColor = .label
         self.navigationItem.rightBarButtonItem = myButtonItem
         NotificationCenter.default.addObserver(self, selector: #selector(orientationChange), name: UIDevice.orientationDidChangeNotification, object: nil)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // ナビゲーションを透明にする処理
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
-        
+        self.navigationController!.navigationBar.shadowImage = UIImage()        
         circle()
         setupChart()
         setData()
-        
     }
-    
+
     @objc func myButtonPressed(_ sender: UIBarButtonItem) {
         //ログインしてるかを検知する
         if Auth.auth().currentUser?.uid != nil {

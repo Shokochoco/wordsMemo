@@ -22,6 +22,7 @@ class FavViewController: UIViewController, UISearchResultsUpdating {
     
     override func viewDidLoad() {
         setup()
+        AppUtility.lockOrientation(.all)
     }
     
     override func viewWillAppear(_ animated: Bool) {

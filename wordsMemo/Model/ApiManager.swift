@@ -1,5 +1,4 @@
 import Foundation
-import APIKit
 
 protocol apiDelegate: AnyObject {
     func jsonData(_ newsInfo: NewsData)

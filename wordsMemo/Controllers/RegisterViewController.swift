@@ -57,6 +57,7 @@ class RegisterViewController: UIViewController {
         let tapGR: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGR.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGR)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

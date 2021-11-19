@@ -27,6 +27,7 @@ class NewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AppUtility.lockOrientation(.all)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         audioSwitch()
         setup()

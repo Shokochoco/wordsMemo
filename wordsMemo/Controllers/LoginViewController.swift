@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        AppUtility.lockOrientation(.all)
+//        AppUtility.lockOrientation(.all)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

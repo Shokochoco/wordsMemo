@@ -338,7 +338,6 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - APIKit (5.2.0)
   - BoringSSL-GRPC (0.0.7):
     - BoringSSL-GRPC/Implementation (= 0.0.7)
     - BoringSSL-GRPC/Interface (= 0.0.7)
@@ -479,7 +478,7 @@ PODS:
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
   - GTMSessionFetcher/Core (1.7.0)
-  - IQKeyboardManagerSwift (6.5.8)
+  - IQKeyboardManagerSwift (6.5.9)
   - Kingfisher (7.1.1)
   - leveldb-library (1.22.1)
   - MBCircularProgressBar (0.3.5)
@@ -491,7 +490,6 @@ PODS:
   - PromisesObjC (2.0.0)
 
 DEPENDENCIES:
-  - APIKit (~> 5.0)
   - Charts
   - Firebase/Analytics
   - Firebase/Auth
@@ -503,7 +501,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
-    - APIKit
     - BoringSSL-GRPC
     - Charts
     - Firebase
@@ -528,7 +525,6 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
-  APIKit: 577bd933169bd289ad6a3fa77a62394eae761619
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   Firebase: fb5114cd2bf96e2ff7bcb01d0d9a156cf5fd2f07
@@ -544,13 +540,13 @@ SPEC CHECKSUMS:
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
-  IQKeyboardManagerSwift: 8139150a3c90a915a413d72a8a3e8634c2d3278b
+  IQKeyboardManagerSwift: 6e839c575c4aa1078d58a596e41244e77abe918f
   Kingfisher: f738f9c4a3415823b8e2985d10aa2d6a9f37bc4d
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
 
-PODFILE CHECKSUM: 2788717860939d8da064dc0d5602435e917efd24
+PODFILE CHECKSUM: c835da121e77642c548a22f601d2080b873a766c
 
 COCOAPODS: 1.11.2

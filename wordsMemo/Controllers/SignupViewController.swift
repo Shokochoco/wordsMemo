@@ -13,8 +13,8 @@ class SignupViewController: UIViewController {
     private let indicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
+        AppUtility.lockOrientation(.portrait)
         view.backgroundColor = #colorLiteral(red: 0, green: 0.6112995148, blue: 0.5753389001, alpha: 1)
-        
         signupBtn.frame = CGRect(x: 0, y: 625, width: 287, height: 46)
         signupBtn.setTitleColor(.white, for: UIControl.State.normal)
         signupBtn.layer.cornerRadius = 10
@@ -38,11 +38,13 @@ class SignupViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = true
+        super.viewWillAppear(animated)
         AppUtility.lockOrientation(.portrait)
+        navigationController?.navigationBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         AppUtility.lockOrientation(.all)
     }
     

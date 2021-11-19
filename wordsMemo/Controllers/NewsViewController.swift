@@ -12,7 +12,7 @@ class NewsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        AppUtility.lockOrientation(.portrait)
         navigationItem.title = "Actualités"
         navigationController?.navigationBar.titleTextAttributes
             = [NSAttributedString.Key.font: UIFont(name: "Times New Roman", size: 25)!]
@@ -29,6 +29,7 @@ class NewsViewController: UIViewController {
         collectionview.collectionViewLayout = flowLayout
         indicatorSetup()
         start()
+
     }
     
     private func indicatorSetup() {
@@ -117,7 +118,7 @@ extension NewsViewController: UICollectionViewDelegate, UICollectionViewDataSour
 }
 // MARK: - API
 extension NewsViewController: apiDelegate {
-    //要らない気がする
+    
     func jsonData(_ newsInfo: NewsData) {
         newsInfos.removeAll()
         

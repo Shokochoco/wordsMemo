@@ -19,7 +19,6 @@ class MypageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        AppUtility.lockOrientation(.portrait)
         nameText.delegate = self
         mailText.isEnabled = false
     }
@@ -48,14 +47,15 @@ class MypageViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AppUtility.lockOrientation(.portrait)
         finishCount.text = "Fini 🥖：\(finishNumber) mots"
         total.text = "Total 🍷： \(totalNumber) mots"
         userInfoFromFireStore()
-        AppUtility.lockOrientation(.portrait)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         AppUtility.lockOrientation(.all)
     }
     
