@@ -90,21 +90,22 @@ class NewViewController: UIViewController {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         //セルをタップした時
         if let indexPath = tableView.indexPathForSelectedRow, segue.identifier == segueEditTaskViewController {
-            //検索してる時
+
             let word: Words
+            //検索してる時
             if isFiltering {
                 word = searchResults[indexPath.row]
             } else {
                 word = words[indexPath.row]
             }
-            // 編集したいデータを取得
-            guard let editedWordEn = word.nameEn,
-                  let editedWordFr = word.nameFr,
-                  let editedGender = word.gender else { return }
+            // こっちの画面のデータを取得
+            guard let wordEn = word.nameEn,
+                  let wordFr = word.nameFr,
+                  let genderInfo = word.gender else { return }
             // 先ほど取得したnameとgenderに合致するデータのみをfetchするようにfetchRequestを作成
             let fetchRequest: NSFetchRequest<Words> = Words.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "nameEn = %@ and nameFr = %@ and gender = %@ ", editedWordEn, editedWordFr, editedGender)
-            // そのfetchRequestを満たすデータをfetchしてwords(配列だが要素を1種類しか持たないはず）に代入し、それを渡す
+            fetchRequest.predicate = NSPredicate(format: "nameEn = %@ and nameFr = %@ and gender = %@ ", wordEn, wordFr, genderInfo)
+            // そのfetchRequestを満たすデータをfetchしてwords（上でfetchした結果は1つになるはずなので）に代入し、遷移先の受け皿に渡す
             do {
                 let words = try context.fetch(fetchRequest)
                 destinationViewController.words = words[0]
